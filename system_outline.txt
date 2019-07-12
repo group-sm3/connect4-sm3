@@ -1,0 +1,49 @@
+Tic-Tac-Toe game visual outline
+
+Home Page:
+- select single player
+- select 2-player
+- select records/leaderboard
+
+Single player page:
+- select game dimensions
+- select icon to play with (X,O,etc)
+- select difficulty level
+- select play
+- select return to home page
+
+2-player page:
+- select game dimensions
+- select icon to play with (X,O,etc)
+- select play
+- select return to home page
+
+Records/Leaderboard page for 2-player:
+- displays leaderboard for 3x3 (top 10)
+- displays leaderboard for 4x4 (top 10)
+- displays leaderboard for 5x5 (top 10)
+- displays user's ranking (doesn't need to be top 10)
+- select return to home page
+
+Single player in-game page:
+- displays grid
+- displays icon choice
+- select quit game (automatic "loss")
+
+2-player in-game page:
+- flip a coin for first action
+- displays grid
+- displays icon choice (both players)
+- displays chat log
+- select to turn on/off chat
+- select quit game (automatic "loss")
+
+
+
+
+
+
+
+
+
+
