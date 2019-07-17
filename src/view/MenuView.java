@@ -1,11 +1,13 @@
 package view;
 
 import controller.Controller;
+import controller.Main;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +19,7 @@ import javafx.geometry.Pos;
 
 import model.Model;
 
-public class MainMenuView{
+public class MenuView{
     private static final int WIDTH = 300;
     private static final int HEIGHT = 400;
     public static final String SPGAME = "Singleplayer";
@@ -29,42 +31,59 @@ public class MainMenuView{
     private final Controller controller;
     private final Stage stage;
 
-    public MainMenuView(Stage stage, Controller controller, Model model) {
+    public MenuView(Stage stage, Controller controller, Model model) {
     	this.stage = stage;
         this.model = model;
         this.controller = controller;
         
         //Title Label
-        Text title = new Text();
-        title.setX(10.0);
-        title.setY(50.0);
-        title.setCache(true);
-        title.setText("TicChess4 Game");
-        title.setFill(Color.DARKGRAY);
-        title.setFont(Font.font(null, FontWeight.BOLD, 30));
+        String c4 = "Connect4";
         Reflection r = new Reflection();
         r.setFraction(0.7);
-        title.setEffect(r);
+        TextFlow title = new TextFlow();
+        for (int i = 0; i < c4.length(); i++) {
+        	Text temp = new Text();
+        	char c = c4.charAt(i);
+        	temp.setX(10.0);
+        	temp.setY(50.0);
+        	temp.setCache(true);
+        	temp.setText( Character.toString(c) );
+        	
+        	if (i % 2 == 0 ) {
+        		temp.setFill(Color.BLUE);
+        	} 
+        	else {
+        		temp.setFill(Color.RED);
+        	}
+        	
+        	temp.setFont(Font.font(null, FontWeight.BOLD, 30));
+        	temp.setEffect(r);
+        	
+        	title.getChildren().add(temp);
+        }
         
         //Singleplayer button
         Button b1 = new Button(SPGAME);
         b1.setOnAction(e -> 
         {
-        	System.out.println("SP Button press");//TODO
+        	if (e.getSource() == b1)
+        		ViewHandler.selectAction(b1.getText());
         });
         
         //Multiplayer button
 		Button b2 = new Button(MPGAME);
 		b2.setOnAction(e -> 
         {
-        	System.out.println("MP Button press");//TODO
+        	if (e.getSource() == b2)
+        		ViewHandler.selectAction(b2.getText());
         });
 		
 		//Settings button
 		Button b3 = new Button(SETTINGS);
 		b3.setOnAction(e -> 
         {
-        	System.out.println("Settings Button press");//TODO
+        	if (e.getSource() == b3)
+        		ViewHandler.selectAction(b3.getText());
         });
 		
 		//Exit button

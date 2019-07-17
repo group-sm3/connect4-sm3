@@ -1,12 +1,11 @@
 package view;
 
-public class ViewHandler 
-{
-	public static void startSP(String title) 
-	{
-		//Window spview = new SPGameView();
-		//TODO
+import controller.Main;
+
+public class ViewHandler {
+
+	public static void selectAction(String selection) {
+		Main.getController().menuSelection(selection);
 	}
 	
-
 }

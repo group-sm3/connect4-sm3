@@ -3,7 +3,7 @@ package controller;
 import javafx.application.*;
 import javafx.stage.*;
 import model.Model;
-import view.MainMenuView;
+import view.MenuView;
 
 public class Main extends Application {
 	
@@ -11,15 +11,17 @@ public class Main extends Application {
     private static Controller controller;
     private static Stage window;
     
+    public static Controller getController() { return controller; }
+    
     @Override
     public void start(Stage primaryStage) {
-    	primaryStage.setTitle("MVC TEST");
+    	primaryStage.setTitle("Connect 4 - SM3");
 
         this.model = new Model();
         this.controller = new Controller(model);
         this.window = primaryStage;
         
-        MainMenuView view = new MainMenuView(primaryStage, controller, model);
+        MenuView view = new MenuView(primaryStage, controller, model);
         
         primaryStage.show();
     }
