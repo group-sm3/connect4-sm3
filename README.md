@@ -13,5 +13,5 @@ For Summer II we are designing a classic connect 4 program, and posting design d
 ## How to run
 JAR file can be executed through command prompt using the following command:
 ```shell
-$ java -jar Connect4
+$ java -jar Connect4.jar
 ```
