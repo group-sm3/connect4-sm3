@@ -1,6 +1,10 @@
 package controller;
+
+import javafx.collections.FXCollections;
 import model.Model;
 import view.MenuView;
+import view.SpView;
+import view.Window;
 
 public class Controller {
 	
@@ -16,11 +20,13 @@ public class Controller {
 		switch (selection) {
 			case MenuView.SPGAME:
 				//TODO
+				Window newWindow = new SpView();
+				newWindow.displayWindow();
 				break;
 			case MenuView.MPGAME: 
 				//TODO
 				break;
-			case MenuView.SETTINGS: 
+			case MenuView.LEADERBOARD: 
 				//TODO
 				break;
 		}

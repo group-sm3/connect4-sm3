@@ -24,7 +24,7 @@ public class MenuView{
     private static final int HEIGHT = 400;
     public static final String SPGAME = "Singleplayer";
 	public static final String MPGAME = "Multiplayer";
-	public static final String SETTINGS = "Settings";
+	public static final String LEADERBOARD = "Leaderboard";
 	public static final String EXIT = "Exit";
     
     private final Model model;
@@ -79,7 +79,7 @@ public class MenuView{
         });
 		
 		//Settings button
-		Button b3 = new Button(SETTINGS);
+		Button b3 = new Button(LEADERBOARD);
 		b3.setOnAction(e -> 
         {
         	if (e.getSource() == b3)
