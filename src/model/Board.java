@@ -9,6 +9,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+import javafx.scene.effect.Lighting; 
 import javafx.stage.Stage;
 
 
@@ -32,8 +33,8 @@ public class Board {
         		shape = shape.subtract(shape, circle);
     		}    		
     	}
-    	shape.setFill(Color.BLUE);
-    	
+		shape.setFill(Color.BLUE);
+		shape.setEffect(new Lighting());
     	return shape;
     }
     
@@ -42,13 +43,13 @@ public class Board {
     	
     	for (int x = 0; x < COLUMNS; x++) {
     		Rectangle rect = new Rectangle(TILE_SIZE, (ROWS + 1) * TILE_SIZE);
-    		rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
+    		rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4); //change from / 4 to / 2
     		rect.setFill(Color.TRANSPARENT);
     		
-    		rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3)));
-    		rect.setOnDragExited(e -> rect.setFill(Color.TRANSPARENT));
+			rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3)));
+			rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
+			list.add(rect);
     	}
-    	
     	
     	return list;
 	}
@@ -57,7 +58,7 @@ public class Board {
     	Pane pane = new Pane();
         
     	Shape gridShape = makeGrid();
-        pane.getChildren().add(gridShape);
+		pane.getChildren().add(gridShape);
         pane.getChildren().addAll(makeColumns());
         return pane;        
     }

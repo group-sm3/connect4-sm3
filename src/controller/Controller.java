@@ -3,7 +3,7 @@ package controller;
 import javafx.collections.FXCollections;
 import model.Model;
 import view.MenuView;
-import view.SpView;
+import view.GameView;
 import view.Window;
 
 public class Controller {
@@ -20,7 +20,7 @@ public class Controller {
 		switch (selection) {
 			case MenuView.SPGAME:
 				//TODO
-				Window newWindow = new SpView();
+				Window newWindow = new GameView();
 				newWindow.displayWindow();
 				break;
 			case MenuView.MPGAME: 

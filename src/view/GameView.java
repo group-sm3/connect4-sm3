@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class SpView implements Window{
+public class GameView implements Window{
 	
 	private Stage stage;
 	private Board board;

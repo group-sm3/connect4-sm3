@@ -3,7 +3,7 @@
 <project name="sm3game" default="construct" basedir=".">
   <!-- Properties-->
   <property name="src.dir" location="." />
-  <property name="build.dir" location="build" />
+  <property name="build.dir" location="bin" />
 
   <!-- Target for deleting the existing directories-->
   <target name="clean">
@@ -13,18 +13,17 @@
   <!-- Target for creating the new directories-->
   <target name="makedir">
     <mkdir dir="${build.dir}" />
-    <mkdir dir="${build.dir}/classes" />
   </target>
  
   <!-- Target for compiling the java code-->
   <target name="compile" depends="clean, makedir">
-    <javac srcdir="${src.dir}" destdir="${build.dir}/classes">
+    <javac srcdir="${src.dir}" destdir="${build.dir}">
     </javac>	
   </target>
  
   <!-- Target for creating a jar file-->
   <target name="makejar" depends="compile">
-    <jar jarfile="./Connect4.jar" basedir="${build.dir}/classes">
+    <jar jarfile="./Connect4.jar" basedir="${build.dir}">
       <manifest>
         <attribute name = "Main-Class" value = "controller.Main"/>
      </manifest>
