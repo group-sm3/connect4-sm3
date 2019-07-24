@@ -6,11 +6,7 @@
 package remoteplay.view;
 import remoteplay.model.ServerModel;
 import java.util.Scanner;
-import java.io.*;
-import javax.swing.*; 
-import java.awt.*; 
-import java.awt.event.*;
-import javax.swing.border.TitledBorder;
+
 
 /**
  *
@@ -19,7 +15,7 @@ import javax.swing.border.TitledBorder;
 public class ServerView {
     Scanner scanOb = new Scanner(System.in);
     public ServerView(ServerModel sm){
-        System.out.println("Welcome to ServerViewBot.");
+        //System.out.println("Welcome to ServerViewBot.");
     }
     
     public void printServerStatus(Boolean on, String pn){

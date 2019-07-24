@@ -15,21 +15,49 @@ import remoteplay.controller.ServerController;
 
 /**
  *
- * @author anned
+ * @author anne
  */
 public class ServerControllerTest {
     
+    // mvc
+    ServerModel sm = new ServerModel();
+    ServerView sv = new ServerView(sm);
+    ServerController sc = new ServerController(sv, sm);
+    
     public ServerControllerTest() {
-        // mvc
-        ServerModel sm = new ServerModel();
-        ServerView sv = new ServerView(sm);
-        ServerController sc = new ServerController(sv, sm);
     }
     
     @Test
-    public void emptyServerModel(){
-        System.out.println("\nTest 1!");
-    
+    public void emptyServerModelPortNumber(){
+        System.out.println("\nTest: Model Port Number Empty");
+        System.out.println("Expected Value: ");
+        assertEquals("", sc.getPortNumber());
+        System.out.println("Actual Value: ");
+    }
+    @Test
+    public void nonEmptyServerModelPortNumber(){
+        System.out.println("\nTest: Model Port Number NOT Empty");
+        System.out.println("Expected Value: 5050");
+        String portNum = "5050";
+        sc.setPortNumber(portNum);
+        assertEquals(portNum, sc.getPortNumber());
+        System.out.println("Actual Value: " + portNum);  
+    }
+    @Test
+    public void ServerModelDefaultOffline(){
+        System.out.println("\nTest: Server Offline by Default");
+        System.out.println("Expected Value: false");
+        assertEquals(false, sc.getOnline());
+        System.out.println("Actual Value: " + sc.getOnline());
+    }
+    @Test 
+    public void ServerModelTurnedOnline(){
+        System.out.println("\nTest: Server Turned Online");
+        System.out.println("Expected Value: true");  
+        sc.setOnline(true);
+        assertEquals(true, sc.getOnline());
+        System.out.println("Actual Value: " + sc.getOnline());
+        
     }
     
 //    @BeforeClass

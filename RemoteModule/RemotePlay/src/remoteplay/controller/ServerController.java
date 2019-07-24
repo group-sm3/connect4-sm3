@@ -11,7 +11,7 @@ import java.net.*;
 
 /**
  *
- * @author anned
+ * @author anne
  */
 public class ServerController {
     private ServerModel sm;
