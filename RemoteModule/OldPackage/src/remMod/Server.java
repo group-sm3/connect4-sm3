@@ -38,7 +38,7 @@ public class Server{
 			}
 
 			// close connection after client requests termination
-			System.out.println("Game ended.  Closing connection.");
+			System.out.println("Game ended.  Closing connection.\n");
 			sock.close();
 			in.close();
 		}

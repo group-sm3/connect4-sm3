@@ -37,7 +37,7 @@ public class Client{
 			}
 
 			// close connection
-			System.out.println("\nClosing connection.");
+			System.out.println("\nClosing connection.\n");
 			buffRead.close();
 			out.close();
 			sock.close();
