@@ -123,6 +123,7 @@ public class Board {
 	public Pane createBoardPane() {
 		//create board pane
 		Pane board = new Pane();
+		board.setId("gameboard");
 		board.getChildren().add(discPane);
     	Shape gridShape = makeGrid();
 		board.getChildren().add(gridShape);
@@ -138,6 +139,7 @@ public class Board {
 
 		//creates textfield 
 		TextField gameinfo = new TextField();
+		gameinfo.setId("gameinfo");
 		gameinfo.setEditable(false);
 		gameinfo.setPrefHeight(60);
 		gameinfo.setText("Game start...");
