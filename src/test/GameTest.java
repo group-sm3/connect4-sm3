@@ -4,14 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import view.Board;
+import model.Game;
 
-class BoardTest {
+class GameTest {
 
-	Board board;
+	Game game;
 
 	@Test
-	void checkColumnSelcetions() {
+	void checkGameOver1() {
 		fail("Not yet implemented");
 	}
 
