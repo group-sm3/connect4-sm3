@@ -10,7 +10,6 @@ public class Model {
 		for(ModelListener ml : listeners) {
 			ml.modelChanged(event);
 		}
-		
 	}
 	public void addModelListener(ModelListener l){
 		listeners.add(l);

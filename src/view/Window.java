@@ -1,5 +1,5 @@
 package view;
 
 public interface Window {
-	void displayWindow();
+	void displayWindow(String type);
 }

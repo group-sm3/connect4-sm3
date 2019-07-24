@@ -1,7 +1,6 @@
 package view;
 
 import controller.Controller;
-import controller.Main;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
