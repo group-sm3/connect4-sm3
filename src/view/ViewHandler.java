@@ -12,4 +12,7 @@ public class ViewHandler {
 		Main.getController().spStart(difficulty, color);
 	}
 	
+	public static void selectColumn(int column) {
+		Main.getController().getGameController().playerColumnClick(column);
+	}
 }

@@ -9,26 +9,28 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Circle;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.ModelEvent;
 
 
 public class GameView implements Window{
 	
 	private final String spstart = "SP";
 	private final String mpstart = "MP";
-	private Stage stage = new Stage();
-	private Board board = new Board();
+	private Stage stage;
+	private Board board;
+	private TextField gameinfo;
     
     public void displayWindow(String type) {
+		stage = new Stage();
+		board = new Board();
 		if (type == spstart) {
 			stage.setScene(new Scene(spmenu()));
 			stage.show();
@@ -61,8 +63,7 @@ public class GameView implements Window{
         {
         	if (e.getSource() == startbutton) {
 				ViewHandler.spStart(difficultycb.getSelectionModel().getSelectedItem(), playercolorcb.getSelectionModel().getSelectedItem());
-
-				stage.setScene(new Scene(board.createBoardPane()));//TODO //FOR TESTING
+				stage.setScene(new Scene(gameView()));
 			}
         		
         });
@@ -77,5 +78,36 @@ public class GameView implements Window{
 
 	private void mpmenu() {
 		//TODO
+	}
+
+
+	private Pane gameView() {
+		//loads background image
+		ImageView image = new ImageView(new Image(("res/background1.jpg")));
+
+		//combines board with background
+		StackPane spane = new StackPane();
+		//spane.setMargin(board.createBoardPane(), new Insets(60, 160, 40, 160));
+		spane.getChildren().addAll(image, board.createBoardPane());
+		spane.setMargin(spane.getChildren().get(1), new Insets(60, 160, 40, 160));
+
+		//creates textfield 
+		TextField gameinfo = new TextField();
+		gameinfo.setId("gameinfo");
+		gameinfo.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
+		gameinfo.setEditable(false);
+		gameinfo.setPrefHeight(60);
+		gameinfo.setText("Game start...");
+		this.gameinfo = gameinfo;
+
+		VBox vbox = new VBox(spane, gameinfo);
+    	return vbox;
+	}
+
+	// Now implement the necessary event handling code 
+	public void modelChanged(ModelEvent event) 
+	{
+		board.placeDisc(event.getColor(), event.getColumn(), event.getRow());
+		System.out.println("TESTING");//TODO
 	}
 }
