@@ -22,6 +22,7 @@ public class ServerView extends JFrameView{
     public ServerView(ServerModel model, ServerController cont){
         super(model, cont);
         textField.setText("port #");
+        this.setPreferredSize(new Dimension(250, 100));
         this.getContentPane().add(textField, BorderLayout.NORTH);
         JPanel buttonPanel = new JPanel();
         Handler handler = new Handler();

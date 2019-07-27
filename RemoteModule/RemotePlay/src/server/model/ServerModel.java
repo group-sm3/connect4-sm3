@@ -21,10 +21,19 @@ public class ServerModel extends AbstractModel {
     public void setPortNumber(Integer pn){
         this.portNumber = pn;
     }
+    
+    public int getPortNumber(){
+        return portNumber;
+    }
+    
     public void error(){
         ModelEvent me = new ModelEvent(this, 1, "", "Error!");
         notifyChanged(me);
     }
+    
+    public void invalidInput(){
+    }
+    
     public void activateListen(){
         System.out.println("At activateListen()");
     // start listen-wait mode 
