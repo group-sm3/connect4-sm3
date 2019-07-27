@@ -11,9 +11,9 @@ public class Game extends Model {
 	private final int COLUMNS = 7;
 	private final int ROWS = 6;
     private boolean redMove = true;
-    private char red = 'r';
-    private char yellow = 'y';
-	private char[][] grid = new char[COLUMNS][ROWS];
+    private Character red = 'r';
+    private Character yellow = 'y';
+	private Character[][] grid = new Character[COLUMNS][ROWS];
 
     //Constructor for Singleplayer Game
     public Game(String difficulty, String color) {
@@ -37,18 +37,19 @@ public class Game extends Model {
 		return Optional.ofNullable(grid[column][row]);
     }
     
-    private void addDisc(char disc, int column) {
-		
+    private void addDisc(Character disc, int column) {
+        
 		//Checks next available slot in column
         int row = ROWS - 1;
         do {
-            if (!getDisc(column, row).isPresent())
+            if (this.grid[column][row] != null)
                 break;
             row--;
             System.out.println(row);
-        } while (row > 0); //TEST >= to > // TODO
-
-        if (row < 0)
+        } while (row >= 0);
+        row++;
+        //if row is full
+        if (row > ROWS-1)
             return;
         
 		//adds disc to column 

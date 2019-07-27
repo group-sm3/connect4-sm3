@@ -18,9 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.ModelEvent;
+import model.ModelListener;
 
 
-public class GameView implements Window{
+public class GameView implements Window, ModelListener{
 	
 	private final String spstart = "SP";
 	private final String mpstart = "MP";
@@ -62,7 +63,7 @@ public class GameView implements Window{
         startbutton.setOnAction(e -> 
         {
         	if (e.getSource() == startbutton) {
-				ViewHandler.spStart(difficultycb.getSelectionModel().getSelectedItem(), playercolorcb.getSelectionModel().getSelectedItem());
+				ViewHandler.spStart(difficultycb.getSelectionModel().getSelectedItem(), playercolorcb.getSelectionModel().getSelectedItem(), this);
 				stage.setScene(new Scene(gameView()));
 			}
         		
@@ -108,6 +109,5 @@ public class GameView implements Window{
 	public void modelChanged(ModelEvent event) 
 	{
 		board.placeDisc(event.getColor(), event.getColumn(), event.getRow());
-		System.out.println("TESTING");//TODO
 	}
 }

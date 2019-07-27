@@ -70,12 +70,12 @@ public class Board {
 	}
 
 
-	public void placeDisc(char color, int column, int row) {
+	public void placeDisc(Character color, int column, int row) {
 		//creates disc with correct color
 		Disc disc;
-		if (color == 'r')
+		if (color.charValue() == 'r')
 			disc = new Disc(true);
-		else if (color == 'y')
+		else if (color.charValue() == 'y')
 			disc = new Disc(false);
 		else
 			return;
@@ -86,6 +86,7 @@ public class Board {
         disc.setTranslateX(column * (TILE_SIZE + 5) + TILE_SIZE / 4);
 		
 		//Animation
+		row = (ROWS-1) - row;
 		TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
         animation.setToY(row * (TILE_SIZE + 5) + TILE_SIZE / 4);
         animation.setOnFinished(e -> {

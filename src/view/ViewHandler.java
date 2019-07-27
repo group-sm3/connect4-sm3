@@ -1,6 +1,7 @@
 package view;
 
 import controller.Main;
+import model.ModelListener;
 
 public class ViewHandler {
 
@@ -8,8 +9,8 @@ public class ViewHandler {
 		Main.getController().menuSelection(selection);
 	}
 
-	public static void spStart(String difficulty, String color) {
-		Main.getController().spStart(difficulty, color);
+	public static void spStart(String difficulty, String color, ModelListener ml) {
+		Main.getController().spStart(difficulty, color, ml);
 	}
 	
 	public static void selectColumn(int column) {

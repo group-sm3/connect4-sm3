@@ -2,6 +2,7 @@ package controller;
 
 import model.Game;
 import model.Model;
+import model.ModelListener;
 import view.MenuView;
 import view.GameView;
 import view.Window;
@@ -10,6 +11,7 @@ public class Controller {
 	
 	private Model model;
 	private GameController gamecontroller;
+	private Window window;
 	
 	public Controller(Model model) {
 		this.model = model;
@@ -20,13 +22,13 @@ public class Controller {
 		switch (selection) {
 			case MenuView.SPGAME:
 				//TODO
-				Window spWindow = new GameView();
-				spWindow.displayWindow("SP");
+				window = new GameView();
+				window.displayWindow("SP");
 				break;
 			case MenuView.MPGAME: 
 				//TODO
-				Window mpWindow = new GameView();
-				mpWindow.displayWindow("MP");
+				window = new GameView();
+				window.displayWindow("MP");
 				break;
 			case MenuView.LEADERBOARD: 
 				//TODO
@@ -35,10 +37,11 @@ public class Controller {
 		
 	}
 
-	public void spStart(String difficulty, String color) {
+	public void spStart(String difficulty, String color, ModelListener ml) {
 		
 		this.model = new Game(difficulty, color);
-		this.gamecontroller = new GameController((Game)this.model);
+		getModel().addModelListener(ml);
+		this.gamecontroller = new GameController((Game)getModel());
 	}
 
 	public Model getModel() { return this.model; }
