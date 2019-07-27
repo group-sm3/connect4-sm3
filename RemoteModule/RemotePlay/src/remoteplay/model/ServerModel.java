@@ -7,7 +7,7 @@ package remoteplay.model;
 
 /**
  *
- * @author anned
+ * @author anne
  */
 public class ServerModel {
     private String portNumber = "";

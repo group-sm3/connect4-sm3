@@ -11,7 +11,7 @@ import java.io.*;
 
 /**
  *
- * @author anned
+ * @author anne
  */
 public class Server {
 
