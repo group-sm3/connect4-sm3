@@ -84,7 +84,7 @@ public class GameView implements Window, ModelListener{
 
 	private Pane gameView() {
 		//loads background image
-		ImageView image = new ImageView(new Image(("res/background1.jpg")));
+		ImageView image = new ImageView(new Image(("rsc/background1.jpg")));
 
 		//combines board with background
 		StackPane spane = new StackPane();
