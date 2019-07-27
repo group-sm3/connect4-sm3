@@ -83,14 +83,16 @@ public class GameView implements Window, ModelListener{
 
 
 	private Pane gameView() {
+		/* REMOVED BACKGROUND IMAGE
 		//loads background image
-		ImageView image = new ImageView(new Image(("rsc/background1.jpg")));
+		////ImageView image = new ImageView(new Image(("rsc/background1.jpg")));
 
 		//combines board with background
 		StackPane spane = new StackPane();
 		//spane.setMargin(board.createBoardPane(), new Insets(60, 160, 40, 160));
 		spane.getChildren().addAll(image, board.createBoardPane());
 		spane.setMargin(spane.getChildren().get(1), new Insets(60, 160, 40, 160));
+		*/
 
 		//creates textfield 
 		TextField gameinfo = new TextField();
@@ -101,7 +103,7 @@ public class GameView implements Window, ModelListener{
 		gameinfo.setText("Game start...");
 		this.gameinfo = gameinfo;
 
-		VBox vbox = new VBox(spane, gameinfo);
+		VBox vbox = new VBox(board.createBoardPane(), gameinfo);
     	return vbox;
 	}
 
