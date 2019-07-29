@@ -18,11 +18,11 @@ public class Controller {
 	
 	public void menuSelection(String selection) {
 
-		if (selection == "SP") {
+		if ( selection.equals("SP") ) {
 			window = new GameView();
 				window.displayWindow("SP");
 		}
-		else if (selection == "MP") {
+		else if ( selection.equals("MP") ) {
 			window = new GameView();
 			window.displayWindow("MP");
 		}

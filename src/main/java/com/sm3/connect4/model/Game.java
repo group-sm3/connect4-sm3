@@ -28,14 +28,6 @@ public class Game extends Model {
             playerRed = false;
 
     }
-
-
-    //Optional not working with char
-    private Optional<Character> getDisc(int column, int row) {
-		if (column < 0 || column >= COLUMNS || row < 0 || row >= ROWS) 
-			return Optional.empty();
-		return Optional.ofNullable(grid[column][row]);
-    }
     
     private void addDisc(Character disc, int column) {
         
