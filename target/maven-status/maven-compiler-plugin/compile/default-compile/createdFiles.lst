@@ -2,6 +2,7 @@ com\sm3\connect4\view\Board.class
 com\sm3\connect4\view\Board$Disc.class
 com\sm3\connect4\controller\GameController.class
 com\sm3\connect4\model\Model.class
+com\sm3\connect4\model\AI.class
 com\sm3\connect4\model\ModelListener.class
 com\sm3\connect4\controller\Controller.class
 com\sm3\connect4\view\GameView.class
