@@ -14,5 +14,9 @@ public class GameController {
 
     public void playerColumnClick(int column) {
         getGame().playerColumnChoice(column);
-	}
+    }
+    
+    public void botMove() {
+        getGame().botColumnChoice();
+    }
 }

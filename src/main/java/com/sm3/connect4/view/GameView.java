@@ -8,7 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -25,13 +25,16 @@ public class GameView implements Window, ModelListener{
 	
 	private final String spstart = "SP";
 	private final String mpstart = "MP";
+	private String type;
 	private Stage stage;
 	private Board board;
-	private TextField gameinfo;
+	private TextArea gameinfo;
+	private char playerColor = ' ';
     
     public void displayWindow(String type) {
-		stage = new Stage();
-		board = new Board();
+		this.stage = new Stage();
+		this.board = new Board();
+		this.type = type;
 		if (type == spstart) {
 			stage.setScene(new Scene(spmenu()));
 			stage.show();
@@ -63,6 +66,7 @@ public class GameView implements Window, ModelListener{
         startbutton.setOnAction(e -> 
         {
         	if (e.getSource() == startbutton) {
+				this.playerColor = playercolorcb.getSelectionModel().getSelectedItem().toString() == "Red" ? 'r' : 'y';
 				ViewHandler.spStart(difficultycb.getSelectionModel().getSelectedItem(), playercolorcb.getSelectionModel().getSelectedItem(), this);
 				stage.setScene(new Scene(gameView()));
 			}
@@ -95,12 +99,11 @@ public class GameView implements Window, ModelListener{
 		*/
 
 		//creates textfield 
-		TextField gameinfo = new TextField();
+		TextArea gameinfo = new TextArea();
 		gameinfo.setId("gameinfo");
-		gameinfo.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
 		gameinfo.setEditable(false);
 		gameinfo.setPrefHeight(60);
-		gameinfo.setText("Game start...");
+		gameinfo.setText("Game start.");
 		this.gameinfo = gameinfo;
 
 		VBox vbox = new VBox(board.createBoardPane(), gameinfo);
@@ -110,6 +113,28 @@ public class GameView implements Window, ModelListener{
 	// Now implement the necessary event handling code 
 	public void modelChanged(ModelEvent event) 
 	{
-		board.placeDisc(event.getColor(), event.getColumn(), event.getRow());
+		if (type == spstart) {
+			if (event.getContent()) {
+				board.placeDisc(event.getColor(), event.getColumn(), event.getRow());
+				gameinfo.appendText("\n" + event.getMessage());
+				if (event.getWin()) {
+					String msg = event.getColor() == 'r' ? "Red wins!!!" : "Yellow wins!!!";
+					gameinfo.appendText("\n" + msg);
+				}
+				gameinfo.setScrollTop(Double.MAX_VALUE);
+
+				if (event.getColor() == this.playerColor)
+					ViewHandler.botTurn();
+				else
+					board.setPlayerMove(true);
+			}
+			else {
+				gameinfo.appendText("\n" + event.getMessage());
+				board.setPlayerMove(true);
+				gameinfo.setScrollTop(Double.MAX_VALUE);
+			}
+			return;
+		}
+
 	}
 }

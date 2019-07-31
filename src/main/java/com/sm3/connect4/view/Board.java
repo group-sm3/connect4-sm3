@@ -21,8 +21,7 @@ public class Board {
 	private final int TILE_SIZE = 60;
 	private final int COLUMNS = 7;
 	private final int ROWS = 6;
-	private boolean redMove = true;
-	private boolean canGo;
+	private boolean playerMove = true;
 	private Disc[][] grid = new Disc[COLUMNS][ROWS];
 	private Pane discPane = new Pane();
 	
@@ -40,7 +39,6 @@ public class Board {
         		circle.setCenterY(TILE_SIZE / 2);
         		circle.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
         		circle.setTranslateY(y * (TILE_SIZE + 5) + TILE_SIZE / 4);
-        		
         		shape = shape.subtract(shape, circle);
     		}    		
     	}
@@ -56,19 +54,29 @@ public class Board {
     		Rectangle rect = new Rectangle(TILE_SIZE, (ROWS + 1) * TILE_SIZE);
     		rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
     		rect.setFill(Color.TRANSPARENT);
-    		
 			rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3)));
 			rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
 			
 			final int column = x;
-			rect.setOnMouseClicked(e -> ViewHandler.selectColumn(column) ); //notifies controller
-
+			//notifes controller
+			rect.setOnMouseClicked(e ->	columnClick(column) );
+				
 			list.add(rect);
-    	}
-    	
+		}
+		
     	return list;
 	}
 
+	private void columnClick(int column) {
+		if(playerMove) {
+			playerMove = false;
+			ViewHandler.selectColumn(column);
+		}
+	}
+
+	public void setPlayerMove(boolean pm) { 
+		this.playerMove = pm; 
+	}
 
 	public void placeDisc(Character color, int column, int row) {
 		//creates disc with correct color
@@ -89,9 +97,9 @@ public class Board {
 		row = (ROWS-1) - row;
 		TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
         animation.setToY(row * (TILE_SIZE + 5) + TILE_SIZE / 4);
-        animation.setOnFinished(e -> {
-			///inform player that movement occured
-        });
+        animation.setOnFinished(e -> { 
+			////tell if move is over so game logic can continue
+		});
         animation.play();
     }	
 	
