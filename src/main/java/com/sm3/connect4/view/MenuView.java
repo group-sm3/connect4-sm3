@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.layout.Priority;
 
 import com.sm3.connect4.model.Model;
 
@@ -65,24 +66,34 @@ public class MenuView{
         Button b1 = new Button(SPGAME);
         b1.setOnAction(e -> 
         {
-        	if (e.getSource() == b1)
-        		ViewHandler.selectAction(b1.getText());
+        	if (e.getSource() == b1){
+                    ViewHandler.selectAction(b1.getText());
+//                    stage.close();
+//                    e.consume();
+                }
+        		
         });
         
         //Multiplayer button
 		Button b2 = new Button(MPGAME);
 		b2.setOnAction(e -> 
         {
-        	if (e.getSource() == b2)
-        		ViewHandler.selectAction(b2.getText());
+        	if (e.getSource() == b2){
+                    ViewHandler.selectAction(b2.getText());
+//                    stage.close();
+//                    e.consume();
+                }
         });
 		
 		//Settings button
 		Button b3 = new Button(LEADERBOARD);
 		b3.setOnAction(e -> 
         {
-        	if (e.getSource() == b3)
-        		ViewHandler.selectAction(b3.getText());
+        	if (e.getSource() == b3){
+                    ViewHandler.selectAction(b3.getText());
+//                    stage.close();
+//                    e.consume();
+                }
         });
 		
 		//Exit button
@@ -91,8 +102,8 @@ public class MenuView{
     	{
     		if (e.getSource() == b4)
 			{
-				stage.close();
-				e.consume();
+                            stage.close();
+                            e.consume();
 			}
     	});
 		
@@ -107,6 +118,7 @@ public class MenuView{
         vbox.getChildren().addAll(b1, b2, b3, b4);
         vbox.setAlignment(Pos.CENTER);
         
+
         //Sets the Pane
         BorderPane bpane = new BorderPane();
 		bpane.setId("Main");

@@ -19,12 +19,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.sm3.connect4.model.ModelEvent;
 import com.sm3.connect4.model.ModelListener;
+import javafx.application.Application;
 
 
 public class GameView implements Window, ModelListener{
 	
 	private final String spstart = "SP";
 	private final String mpstart = "MP";
+        private final String lbstart = "LB";
 	private String type;
 	private Stage stage;
 	private Board board;
@@ -40,8 +42,12 @@ public class GameView implements Window, ModelListener{
 			stage.show();
 		} 
 		else if (type == mpstart) {
-			mpmenu();
+			stage.setScene(new Scene(mpmenu()));
+			stage.show();
 		}
+                else if (type == lbstart){
+                        lbmenu();
+                }
     	
 	}
 	
@@ -51,18 +57,26 @@ public class GameView implements Window, ModelListener{
 		ChoiceBox<String> difficultycb = new ChoiceBox<String>(FXCollections.observableArrayList("Easy", "Hard"));
 		difficultycb.setValue("Easy");
 		HBox hbox1 = new HBox();
-		hbox1.setPadding(new Insets(10,5,10,5));
-		hbox1.getChildren().addAll(new Text("Difficulty: "), difficultycb);
-
+		hbox1.setPadding(new Insets(10,25,0,25));
+		hbox1.getChildren().add(new Text("Difficulty: "));
+                hbox1.getChildren().add((difficultycb));
+                
 		//Setup for player color choice row
 		ChoiceBox<String> playercolorcb = new ChoiceBox<String>(FXCollections.observableArrayList("Red", "Yellow"));
 		playercolorcb.setValue("Red");
-		HBox hbox2 = new HBox();
-		hbox2.setPadding(new Insets(10,5,10,5));
-		hbox2.getChildren().addAll(new Text("Player Color: "), playercolorcb);
-
+		
+		hbox1.setPadding(new Insets(10,10,0,10));
+		hbox1.getChildren().add(new Text("     Player Color: "));
+                hbox1.getChildren().add(( playercolorcb));
+                
 		//Start game button
+                HBox hbox2 = new HBox();
+                hbox2.setPadding(new Insets(-15, 25, 10, 25));
+                hbox2.setSpacing(15);
 		Button startbutton = new Button("START");
+                Button returnbutton = new Button("RETURN");
+                
+                
         startbutton.setOnAction(e -> 
         {
         	if (e.getSource() == startbutton) {
@@ -72,19 +86,86 @@ public class GameView implements Window, ModelListener{
 			}
         		
         });
+        returnbutton.setOnAction(e -> 
+        {
+        	if (e.getSource() == returnbutton) {
+				stage.close();
+				e.consume();
+			}
+        		
+        });
 
 		//combines rows and button
 		VBox vbox = new VBox(30);
 		vbox.setAlignment(Pos.CENTER);
-		vbox.getChildren().addAll(hbox1, hbox2, startbutton);
-
+                hbox2.getChildren().add(startbutton);
+                hbox2.getChildren().add(returnbutton);
+                hbox2.setAlignment(Pos.CENTER);
+		vbox.getChildren().addAll(hbox1, hbox2);
+                
 		return vbox;
 	}
 
-	private void mpmenu() {
-		//TODO
-	}
+	private Pane mpmenu() {
+				//Setup for difficulty choice row
+		//Setup for difficulty choice row
+		ChoiceBox<String> connectioncb = new ChoiceBox<String>(FXCollections.observableArrayList("Local", "Online"));
+		connectioncb.setValue("Local");
+		HBox hbox1 = new HBox();
+		hbox1.setPadding(new Insets(10,25,0,25));
+		hbox1.getChildren().add(new Text("Connection: "));
+                hbox1.getChildren().add((connectioncb));
+                
+		//Setup for player color choice row
+		ChoiceBox<String> playercolorcb = new ChoiceBox<String>(FXCollections.observableArrayList("Red", "Yellow"));
+		playercolorcb.setValue("Red");
+		
+		hbox1.setPadding(new Insets(10,10,0,10));
+		hbox1.getChildren().add(new Text("     Player Color: "));
+                hbox1.getChildren().add((playercolorcb));
+                
+		//Start game button
+                HBox hbox2 = new HBox();
+                hbox2.setPadding(new Insets(-15, 25, 10, 25));
+                hbox2.setSpacing(15);
+		Button startbutton = new Button("START");
+                Button returnbutton = new Button("RETURN");
+                
+                
+        startbutton.setOnAction(e -> 
+        {
+        	if (e.getSource() == startbutton) {
+				this.playerColor = playercolorcb.getSelectionModel().getSelectedItem().toString() == "Red" ? 'r' : 'y';
+				ViewHandler.spStart(connectioncb.getSelectionModel().getSelectedItem(), playercolorcb.getSelectionModel().getSelectedItem(), this);
+				stage.setScene(new Scene(gameView()));
+			}
+        		
+        });
+        returnbutton.setOnAction(e -> 
+        {
+        	if (e.getSource() == returnbutton) {
+				
+                    
+                                stage.close();
+				e.consume();
+			}
+        		
+        });
 
+		//combines rows and button
+		VBox vbox = new VBox(30);
+		vbox.setAlignment(Pos.CENTER);
+                hbox2.getChildren().add(startbutton);
+                hbox2.getChildren().add(returnbutton);
+                hbox2.setAlignment(Pos.CENTER);
+		vbox.getChildren().addAll(hbox1, hbox2);
+                
+		return vbox;
+	}
+        
+        private void lbmenu(){
+                //TODO
+        }
 
 	private Pane gameView() {
 		/* REMOVED BACKGROUND IMAGE

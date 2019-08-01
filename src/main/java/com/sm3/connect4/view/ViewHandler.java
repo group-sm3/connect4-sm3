@@ -20,4 +20,7 @@ public class ViewHandler {
 	public static void botTurn() {
 		Gui.getController().getGameController().botMove();
 	}
+        public static void returnMainPage(String selection){
+                Gui.getController().
+        }
 }
