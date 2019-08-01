@@ -167,4 +167,5 @@ public class Game extends Model {
 		notifyChanged(me);
 	}
 
+	public int getPlayerColor() { return this.playerColor; };
 }
