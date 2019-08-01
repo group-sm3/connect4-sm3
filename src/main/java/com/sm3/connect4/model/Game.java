@@ -15,7 +15,7 @@ public class Game extends Model {
 
 	// Constructor for Singleplayer Game
 	public Game(String diff, String color) {
-		if (diff == "Hard")
+		if (diff == "Easy")
 			difficulty = 1;
 		else if (diff == "Normal")
 			difficulty = 2;
@@ -167,5 +167,7 @@ public class Game extends Model {
 		notifyChanged(me);
 	}
 
-	public int getPlayerColor() { return this.playerColor; };
+	public int getPlayerColor() { return this.playerColor; }
+	
+	public int getDifficulty() { return this.difficulty; }
 }

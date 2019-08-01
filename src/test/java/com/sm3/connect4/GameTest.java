@@ -17,4 +17,12 @@ public class GameTest {
         Game g2 = new Game("Hard", "Yellow");
         Assertions.assertTrue(g2.getPlayerColor() == 2);
     }
+
+    public void testGameDifficulty() {
+        Game g1 = new Game("Easy", "Red");
+        Assertions.assertTrue(g1.getDifficulty() == 1);
+        Game g2 = new Game("Hard", "Yellow");
+        Assertions.assertTrue(g2.getDifficulty() == 3);
+    }
+
 }
