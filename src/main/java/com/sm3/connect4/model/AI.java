@@ -31,13 +31,13 @@ public int BotTurn()
 	{
 		int y = counter[i]; //height determined by piece count
 		try {
-			if(grid[i][y+1] == grid[i][y+2] && grid[i][y+2] == grid[i][y+3]) 
+			if(grid[i][y-1] == grid[i][y-2] && grid[i][y-2] == grid[i][y-3]) 
 			{
-				if(grid[i][y+1] == botColor)
+				if(grid[i][y-1] == botColor)
 				{
 					score[i] = 7;
 				}
-				if(grid[i][y+1] == playerColor)
+				if(grid[i][y-1] == playerColor)
 				{
 					score[i] = 6;
 				}
@@ -50,7 +50,7 @@ public int BotTurn()
 	{
 		int y = counter[i];
 		try {
-		if(grid[i + 1][y] == grid[i + 2][y] && grid[i + 2][y] == grid[i + 3][y])
+		if(grid[i + 1][y] == grid[i +-2][y] && grid[i + 2][y] == grid[i + 3][y])
         {
             //Debug.Log("a case 1");
             if(grid[i + 1][y] == playerColor)
@@ -250,13 +250,13 @@ public int BotTurn()
 		int y = counter[i];
 	//by column
 		try {
-			if(grid[i][y+1] == grid[i][y+2]) 
+			if(grid[i][y-1] == grid[i][y-2]) 
 			{
-				if(grid[i][y+1] == botColor && score[i] < 5)
+				if(grid[i][y-1] == botColor && score[i] < 5)
 				{
 					score[i] = 5;
 				}
-				if(grid[i][y+1] == playerColor && score[i] < 4)
+				if(grid[i][y-1] == playerColor && score[i] < 4)
 				{
 					score[i] = 4;
 				}

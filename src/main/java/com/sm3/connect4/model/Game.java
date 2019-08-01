@@ -11,7 +11,7 @@ public class Game extends Model {
 	private int playerColor;
 	private boolean gameOver = false;
 	private int[][] grid = new int[COLUMNS][ROWS];
-	private int counter[] = { 5, 5, 5, 5, 5, 5, 5 }; // counter counts how many free spaces are left (includes 0)
+	private int counter[] = { 0,0,0,0,0,0,0 }; // counter counts how many free spaces are left (includes 0)
 
 	// Constructor for Singleplayer Game
 	public Game(String diff, String color) {
@@ -139,6 +139,8 @@ public class Game extends Model {
 		else
 			me = addDisc(yellow, column);
 
+		this.counter[column]++;
+
 		if (me.getContent()) {
 			if (CheckWinCondition()) {
 				gameOver = true;
@@ -158,6 +160,8 @@ public class Game extends Model {
 			me = addDisc(yellow, botColumn);
 		else
 			me = addDisc(red, botColumn);
+
+		this.counter[botColumn]++;
 
 		if (CheckWinCondition()) {
 			gameOver = true;
