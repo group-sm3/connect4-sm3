@@ -23,10 +23,10 @@ public class ServerController extends AbstractController{
     // Server equivalent (listen)
     public void operation(String option){
         if (option == (ServerView.LISTEN)){
-            getIsValidPort(isValidPort);
-            while(!isValidPort){
-                ((ServerModel)getModel()).invalidInput();
-            }
+            //getIsValidPort(isValidPort);
+//            while(!isValidPort){
+//                ((ServerModel)getModel()).invalidInput();
+//            }
             ((ServerModel)getModel()).activateListen();
         }
         else{
@@ -34,9 +34,9 @@ public class ServerController extends AbstractController{
         }
     }
     // validate user input
-    void getIsValidPort(Boolean isValidPort){
-        if ((ServerModel)getPortNumber() != 5050){
-            
-        }
-    }
+//    void getIsValidPort(Boolean isValidPort){
+//        if ((ServerModel)getPortNumber() != 5050){
+//            
+//        }
+//    }
 }

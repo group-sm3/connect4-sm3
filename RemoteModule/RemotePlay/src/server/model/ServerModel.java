@@ -35,8 +35,8 @@ public class ServerModel extends AbstractModel {
     }
     
     public void activateListen(){
-        System.out.println("At activateListen()");
-    // start listen-wait mode 
+        System.out.println("At Server::activateListen()");
+        // start listen-wait mode 
         try{
             servSock = new ServerSocket(portNumber);
             System.out.println("\nServer online.  Waiting for client...");
