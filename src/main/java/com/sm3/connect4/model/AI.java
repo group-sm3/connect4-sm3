@@ -432,7 +432,7 @@ public int BotTurn()
 	//Check if placement would set up player for a winning move
 	for (int i = 0; i < 7; i++)
 	{
-		int y = counter[i] - 1;
+		int y = counter[i] + 1;
 		//row
 		try {
         if(grid[i-3][y] == grid[i-2][y] && grid[i-2][y] == grid[i-1][y] && grid[i-1][y] == playerColor)
