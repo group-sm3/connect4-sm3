@@ -1,11 +1,19 @@
 package com.sm3.connect4.model;
 
 public class AI {
+private int ROWS;
+private int COLUMNS;
+private int[][] grid;
+private int[]counter;
 private int botColor;
 private int playerColor;
 
-public AI(int color) {
+public AI(int color, int rows, int columns, int grid[][], int counter[]) {
+	this.ROWS = rows;
+	this.COLUMNS = columns;
 	this.botColor = color;
+	this.grid = grid;
+	this.counter = counter;
 	if (botColor == 1) {
 		playerColor = 2;
 	} else {
@@ -13,7 +21,7 @@ public AI(int color) {
 	}
 }
 
-public int BotTurn(int [][] grid, int counter[])
+public int BotTurn()
 {
 	int bestCol = 0; //optimal position, to be returned
 	int score[] = {2,2,2,2,2,2,2}; //score of each column
@@ -536,6 +544,16 @@ public int BotTurn(int [][] grid, int counter[])
 	        }}
 		catch(ArrayIndexOutOfBoundsException exception) {		}
 	}
+
+	//if column is full, score = 0
+	for (int i = 0; i < 7; i++)
+	{
+		if (counter[i] == 6)
+		{
+			score[i] = 0;
+		}
+	}
+
 	//get highest scoring column
 	int max = 0;
 	for (int i = 0; i < 7; i++)

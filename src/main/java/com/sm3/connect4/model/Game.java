@@ -24,10 +24,10 @@ public class Game extends Model {
 
 		if (color == "Red") {
 			playerColor = red;
-			bot = new AI(yellow);
+			bot = new AI(yellow, ROWS, COLUMNS, grid, counter);
 		} else {
 			playerColor = yellow;
-			bot = new AI(red);
+			bot = new AI(red, ROWS, COLUMNS, grid, counter);
 		}
 	}
 
@@ -48,6 +48,7 @@ public class Game extends Model {
 
 		// adds disc to column
 		this.grid[column][row] = disc;
+		this.counter[column] = this.counter[column]--;
 
 		// return ModelEvent that has content
 		char color;
@@ -151,7 +152,7 @@ public class Game extends Model {
 		if (gameOver)
 			return;
 
-		int botColumn = bot.BotTurn(grid, counter);
+		int botColumn = bot.BotTurn();
 		ModelEvent me;
 		if (playerColor == red)
 			me = addDisc(yellow, botColumn);

@@ -1,11 +1,8 @@
-
-/////EXAMPLE
-
 package com.sm3.connect4;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.framework.Test;
+import org.junit.jupiter.framework.TestCase;
+import org.junit.jupiter.framework.TestSuite;
 
 /**
  * Unit test for app
