@@ -1,0 +1,36 @@
+package com.sm3.connect4;
+
+import org.junit.jupiter.framework.Test;
+import org.junit.jupiter.framework.TestCase;
+import org.junit.jupiter.framework.TestSuite;
+
+/**
+ * Unit test for app
+ */
+public class GameTest extends TestCase {
+    /**
+     * Create the test case
+     *
+     * @param testName name of the test case
+     */
+    public GameTest( String testName )
+    {
+        super( testName );
+    }
+
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite()
+    {
+        return new TestSuite( GameTest.class );
+    }
+
+    /**
+     * Rigourous Test :-)
+     */
+    public void testApp()
+    {
+        assertTrue( true );
+    }
+}
