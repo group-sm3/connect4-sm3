@@ -48,7 +48,7 @@ public class Game extends Model {
 
 		// adds disc to column
 		this.grid[column][row] = disc;
-		this.counter[column] = this.counter[column]--;
+		this.counter[column]++;
 
 		// return ModelEvent that has content
 		char color;
@@ -139,8 +139,6 @@ public class Game extends Model {
 		else
 			me = addDisc(yellow, column);
 
-		this.counter[column]++;
-
 		if (me.getContent()) {
 			if (CheckWinCondition()) {
 				gameOver = true;
@@ -160,8 +158,6 @@ public class Game extends Model {
 			me = addDisc(yellow, botColumn);
 		else
 			me = addDisc(red, botColumn);
-
-		this.counter[botColumn]++;
 
 		if (CheckWinCondition()) {
 			gameOver = true;
