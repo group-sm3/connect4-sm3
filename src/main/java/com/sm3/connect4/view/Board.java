@@ -68,10 +68,7 @@ public class Board {
 	}
 
 	private void columnClick(int column) {
-		if(playerMove) {
-			playerMove = false;
-			ViewHandler.selectColumn(column);
-		}
+                ViewHandler.selectColumn(column);
 	}
 
 	public void setPlayerMove(boolean pm) { 

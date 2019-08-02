@@ -573,7 +573,7 @@ public int BotTurn()
         {
             int randCol = 9;
             int x = random.nextInt(2);
-            System.out.print("X: " + x + "\n");
+            //System.out.print("X: " + x + "\n");
             if (x == 1) // 1/2 chance of randomizing
             {
                 int count = 0;
@@ -626,7 +626,7 @@ public int BotTurn()
             }
         }
         bestCol = max;
-	System.out.println("Scores: " + score[0] + " "+ score[1] + " "+ score[2] + " "+ score[3] + " "+ score[4] + " "+ score[5] + " "+ score[6] + "\n");
+	//System.out.println("Scores: " + score[0] + " "+ score[1] + " "+ score[2] + " "+ score[3] + " "+ score[4] + " "+ score[5] + " "+ score[6] + "\n");
 return bestCol;
 }
 

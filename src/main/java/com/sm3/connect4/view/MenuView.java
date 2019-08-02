@@ -21,8 +21,8 @@ import com.sm3.connect4.model.Model;
 public class MenuView{
     private static final int WIDTH = 300;
     private static final int HEIGHT = 400;
-    public static final String SPGAME = "Singleplayer";
-	public static final String MPGAME = "Multiplayer";
+    public static final String SPGAME = "Local";
+	public static final String MPGAME = "Online";
 	public static final String LEADERBOARD = "Leaderboard";
 	public static final String EXIT = "Exit";
     

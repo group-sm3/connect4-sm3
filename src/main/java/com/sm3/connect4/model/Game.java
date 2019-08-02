@@ -12,6 +12,8 @@ public class Game extends Model {
 	private boolean gameOver = false;
 	private int[][] grid = new int[COLUMNS][ROWS];
 	private int counter[] = { 0, 0, 0, 0, 0, 0, 0 }; // counter counts how many free spaces are left (includes 0)
+        private Boolean hasAI = true;
+        private Boolean playerTurn = true;
 
 	// Constructor for Singleplayer Game
 	public Game(String diff, String color) {
@@ -21,15 +23,20 @@ public class Game extends Model {
 			difficulty = 2;
 		else if (diff == "Hard")
 			difficulty = 3;
+                else    hasAI = false;
                        
-                System.out.print("Difficulty: " + difficulty);
-		if (color == "Red") {
-			playerColor = red;
-			bot = new AI(yellow, ROWS, COLUMNS, grid, counter, difficulty);
-		} else {
-			playerColor = yellow;
-			bot = new AI(red, ROWS, COLUMNS, grid, counter, difficulty);
+                //System.out.print("Difficulty: " + difficulty);
+                if (color == "Red") 
+                {
+		playerColor = red;
+                if(hasAI){bot = new AI(yellow, ROWS, COLUMNS, grid, counter, difficulty);}
+		} 
+                else 
+                {
+		playerColor = yellow;
+                if(hasAI){bot = new AI(red, ROWS, COLUMNS, grid, counter, difficulty);}
 		}
+                
 	}
 
 	private ModelEvent addDisc(int disc, int column) {
@@ -53,9 +60,10 @@ public class Game extends Model {
 		}
 		String msg = "move on row " + counter[column] + ", column " + column + ".";
                 counter[column]++;
+
 		return new ModelEvent(this, 1, "", column, counter[column] - 1, color, msg, false);
 	}
-
+        
 	private boolean CheckWinCondition() // signals: false = no win, true = win
 	{
 		// check horzontally & checks if more than 3 rows (for vertical and diagnal)
@@ -127,13 +135,23 @@ public class Game extends Model {
 	public void playerColumnChoice(int column) {
 		if (gameOver)
 			return;
-
 		ModelEvent me;
 		if (playerColor == red)
 			me = addDisc(red, column);
 		else
 			me = addDisc(yellow, column);
 		
+                if(!hasAI)
+                {
+                 if(playerColor == red)
+                     playerColor = yellow;
+                 else
+                     playerColor = red;
+                }
+                else
+                {
+                playerTurn = false;    
+                }
 		if (me.getContent()) {
 			if (CheckWinCondition()) {
 				gameOver = true;
@@ -144,7 +162,7 @@ public class Game extends Model {
 	}
 
 	public void botColumnChoice() {
-		if (gameOver)
+		if (gameOver || !hasAI)
 			return;
 
 		int botColumn = bot.BotTurn();
@@ -158,7 +176,7 @@ public class Game extends Model {
 			gameOver = true;
 			me.setWin(true);
 		}
-		
+		playerTurn = true;
 		notifyChanged(me);
 	}
 

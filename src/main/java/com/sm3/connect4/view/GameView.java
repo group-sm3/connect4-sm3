@@ -48,11 +48,11 @@ public class GameView implements Window, ModelListener{
 	private Pane spmenu() {
 		
 		//Setup for difficulty choice row
-		ChoiceBox<String> difficultycb = new ChoiceBox<String>(FXCollections.observableArrayList("Easy", "Normal", "Hard"));
+		ChoiceBox<String> difficultycb = new ChoiceBox<String>(FXCollections.observableArrayList("Easy", "Normal", "Hard", "Disabled"));
 		difficultycb.setValue("Easy");
 		HBox hbox1 = new HBox();
 		hbox1.setPadding(new Insets(10,5,10,5));
-		hbox1.getChildren().addAll(new Text("Difficulty: "), difficultycb);
+		hbox1.getChildren().addAll(new Text("Bot Setting: "), difficultycb);
 
 		//Setup for player color choice row
 		ChoiceBox<String> playercolorcb = new ChoiceBox<String>(FXCollections.observableArrayList("Red", "Yellow"));

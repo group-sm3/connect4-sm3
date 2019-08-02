@@ -18,11 +18,11 @@ public class Controller {
 	
 	public void menuSelection(String selection) {
 
-		if ( selection.equals("Singleplayer") ) {
+		if ( selection.equals("Local") ) {
 			window = new GameView();
 				window.displayWindow("SP");
 		}
-		else if ( selection.equals("Multiplayer") ) {
+		else if ( selection.equals("Online") ) {
 			window = new GameView();
 			window.displayWindow("MP");
 		}
