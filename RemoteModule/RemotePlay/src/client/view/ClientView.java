@@ -30,11 +30,11 @@ public class ClientView extends JFrameView{
         this.getContentPane().add(textFieldPort, BorderLayout.NORTH);
         this.getContentPane().add(textFieldAddress, BorderLayout.CENTER);
        // Button
-        JButton buttonListen = new JButton(CONNECT);
-        buttonListen.addActionListener(handler);
+        JButton buttonConnect = new JButton(CONNECT);
+        buttonConnect.addActionListener(handler);
         JPanel buttonPanel = new JPanel();
         this.getContentPane().add(buttonPanel, BorderLayout.CENTER);
-        buttonPanel.add(buttonListen, null);
+        buttonPanel.add(buttonConnect, null);
         pack(); 
     }
     

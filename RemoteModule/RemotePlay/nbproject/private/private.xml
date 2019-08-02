@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/model/ModelListener.java</file>
             <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/model/AbstractModel.java</file>
-            <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/view/ServerView.java</file>
+            <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/view/JFrameView.java</file>
+            <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/model/ModelEvent.java</file>
             <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/cont/ServerController.java</file>
+            <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/view/ServerView.java</file>
             <file>file:/C:/Users/anned/Dropbox/Current%20Classes/SOEN/connect4-sm3/RemoteModule/RemotePlay/src/server/model/ServerModel.java</file>
         </group>
     </open-files>

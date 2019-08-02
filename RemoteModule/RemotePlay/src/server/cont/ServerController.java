@@ -21,22 +21,13 @@ public class ServerController extends AbstractController{
     
     // These are command buttons (+, -, clear, equals).
     // Server equivalent (listen)
-    public void operation(String option){
+    public void operation(String option, String txt){
         if (option == (ServerView.LISTEN)){
-            //getIsValidPort(isValidPort);
-//            while(!isValidPort){
-//                ((ServerModel)getModel()).invalidInput();
-//            }
-            ((ServerModel)getModel()).activateListen();
+            ((ServerModel)getModel()).validateTextField(txt);
+            //((ServerModel)getModel()).activateListen();
         }
         else{
             ((ServerModel)getModel()).error();
         }
     }
-    // validate user input
-//    void getIsValidPort(Boolean isValidPort){
-//        if ((ServerModel)getPortNumber() != 5050){
-//            
-//        }
-//    }
 }

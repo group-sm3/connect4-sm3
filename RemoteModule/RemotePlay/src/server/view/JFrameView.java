@@ -32,31 +32,14 @@ public abstract class JFrameView extends JFrame implements View, ModelListener{
     public ServerController getCont(){
         return cont;
     }
-    
     public void setCont(ServerController cont){
         this.cont = cont;
     }
-    
     public ServerModel getModel(){
         return model;
     }
-    
     public void setModel(ServerModel model){
         this.model = model;
         registerWithModel();
     }
-    
-
-//    public void setCont(ServerController sc){
-//        this.cont = sc;
-//    }
-//    public ServerController getCont(){
-//        return this.cont;
-//    }
-//    public void setModel(ServerModel sm){
-//        this.model = sm;
-//    }
-//    public ServerModel getModel(){
-//        return this.model;
-//    }
 }

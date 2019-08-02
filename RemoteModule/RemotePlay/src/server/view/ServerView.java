@@ -39,14 +39,12 @@ public class ServerView extends JFrameView{
     public void modelChanged(ModelEvent event){
         String message = event.getMessage();
         textField.setText(message);
-//        String msg = event.getAmount() + "";
-//        textField.setText(msg);
     }
 
     class Handler implements ActionListener{
         // event handled locally
         public void actionPerformed(ActionEvent e){
-            ((ServerController)getCont()).operation(e.getActionCommand());
+            ((ServerController)getCont()).operation(e.getActionCommand(), textField.getText());
         }
     }
     public static void main(String [] args) { new ServerController(); }

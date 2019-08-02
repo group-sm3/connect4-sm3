@@ -24,6 +24,7 @@ public class ClientController extends AbstractController{
     // Client equivalent (listen)
     public void operation(String option){
         if (option == (ClientView.CONNECT)){
+            System.out.println("User attempts Connect");
             //getIsValidPort(isValidPort);
 //            while(!isValidPort){
 //                ((ClientModel)getModel()).invalidInput();

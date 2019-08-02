@@ -17,6 +17,7 @@ public class ServerModel extends AbstractModel {
     private DataInputStream in = null;
     private ServerSocket servSock = null;
     private Socket sock = null;
+    ModelEvent me = null;
     
     public void setPortNumber(Integer pn){
         this.portNumber = pn;
@@ -31,9 +32,16 @@ public class ServerModel extends AbstractModel {
         notifyChanged(me);
     }
     
-    public void invalidInput(){
+    // This pulls values from the textfield and ensures that the port number
+    // the server must listen on is valid (integer [2048, 65535]).
+    public void validateTextField(String txt){
+        System.out.println("Attempted text: " + txt);
+        me = new ModelEvent(this, 1, "", "neato bandito!");
+        notifyChanged(me);
     }
     
+    // This creates a socket based on validated port number and waits for 
+    // a client to connect.  Later will modify to multithread multiple clients.
     public void activateListen(){
         System.out.println("At Server::activateListen()");
         // start listen-wait mode 
@@ -45,7 +53,7 @@ public class ServerModel extends AbstractModel {
             sock = servSock.accept();
             System.out.println("Client connection accepted.");
             
-            ModelEvent me = new ModelEvent(this, 1, "", "Connected!");
+            me = new ModelEvent(this, 1, "", "Connected!");
             notifyChanged(me);
                 
             // initiate stream to receive client input
