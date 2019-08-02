@@ -19,8 +19,6 @@ public class ServerController extends AbstractController{
         ((JFrameView)getView()).setVisible(true);
     }
     
-    // These are command buttons (+, -, clear, equals).
-    // Server equivalent (listen)
     public void operation(String option, String txt){
         if (option == (ServerView.LISTEN)){
             ((ServerModel)getModel()).validateTextField(txt);
@@ -29,5 +27,9 @@ public class ServerController extends AbstractController{
         else{
             ((ServerModel)getModel()).error();
         }
+    }
+  
+    public void closeProgram(){
+        ((ServerModel)getModel()).closeProgram();
     }
 }

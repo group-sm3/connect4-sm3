@@ -20,10 +20,21 @@ public class ServerView extends JFrameView{
     private JTextField textField = new JTextField();
     
     public ServerView(ServerModel model, ServerController cont){
+        // vars
         super(model, cont);
         textField.setText("port #");
+        // jframe
         this.setPreferredSize(new Dimension(250, 100));
         this.getContentPane().add(textField, BorderLayout.NORTH);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Cleanup networking resources before exiting.
+                ((ServerController)getCont()).closeProgram();
+            }
+        });
+        // panels
         JPanel buttonPanel = new JPanel();
         Handler handler = new Handler();
         JButton buttonListen = new JButton(LISTEN);

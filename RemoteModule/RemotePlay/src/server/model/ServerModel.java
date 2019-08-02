@@ -10,10 +10,8 @@ import java.io.*;
  * @author Anne
  */
 public class ServerModel extends AbstractModel {
-    // the calculator had methods such as add(), sub(), equals().
-    // here I will have data and methods of the server menu instead.
-    Integer portNumber = null;
-    Boolean listening = false;
+    private Integer portNumber = null;
+    private Boolean listening = false;
     private DataInputStream in = null;
     private ServerSocket servSock = null;
     private Socket sock = null;
@@ -92,18 +90,25 @@ public class ServerModel extends AbstractModel {
             System.out.println(i);
         }  
     }
+    public void closeProgram(){
+        System.out.println("Closing program.");
+        closeConnections();
+        System.out.println("\nGoodbye.");
+        System.exit(0);
+    }
     // Closes all client connections, but does not end program.
     public void closeConnections(){
         try{
             // close connection after client requests termination
-            System.out.println("Game ended.  Closing connection.\n");
-            sock.close();
-            in.close();
+            System.out.println("Closing connection.\n");
+            if(sock!=null){
+                sock.close();
+                in.close();           
+            }
         }
         catch(IOException i){
             System.out.println(i);
         }
-        
     }
 }
 
