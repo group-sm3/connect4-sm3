@@ -12,8 +12,8 @@ import java.io.*;
 public class ServerModel extends AbstractModel {
     // the calculator had methods such as add(), sub(), equals().
     // here I will have data and methods of the server menu instead.
-    int portNumber;
-    Boolean listening;
+    Integer portNumber = null;
+    Boolean listening = false;
     private DataInputStream in = null;
     private ServerSocket servSock = null;
     private Socket sock = null;
@@ -31,13 +31,33 @@ public class ServerModel extends AbstractModel {
         ModelEvent me = new ModelEvent(this, 1, "", "Error!");
         notifyChanged(me);
     }
-    
+    public Boolean validatePortNum(String portNum){
+        Integer tempInt = null;
+        try{
+            tempInt = Integer.parseInt(portNum);
+        }
+        catch(NumberFormatException e){
+            return false;
+        }
+        catch(NullPointerException n){
+            return false;
+        }
+        if (tempInt > 65535 || tempInt < 2048){
+            return false;
+        }
+        return true;
+    }
     // This pulls values from the textfield and ensures that the port number
     // the server must listen on is valid (integer [2048, 65535]).
     public void validateTextField(String txt){
-        System.out.println("Attempted text: " + txt);
-        me = new ModelEvent(this, 1, "", "neato bandito!");
-        notifyChanged(me);
+        System.out.println("Attempted portNum: " + txt);
+        if (!validatePortNum(txt)){
+            me = new ModelEvent(this, 1, "", "Valid port number: [2048, 65535]");
+            notifyChanged(me);    
+        }
+        else{
+            System.out.println("Port number valid: " + txt);
+        }
     }
     
     // This creates a socket based on validated port number and waits for 
@@ -67,15 +87,23 @@ public class ServerModel extends AbstractModel {
                     line = in.readUTF();
                     System.out.println(line);
             }
-
+        }
+        catch(IOException i){
+            System.out.println(i);
+        }  
+    }
+    // Closes all client connections, but does not end program.
+    public void closeConnections(){
+        try{
             // close connection after client requests termination
             System.out.println("Game ended.  Closing connection.\n");
             sock.close();
             in.close();
         }
         catch(IOException i){
-                System.out.println(i);
-        }  
+            System.out.println(i);
+        }
+        
     }
 }
 
