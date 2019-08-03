@@ -16,4 +16,6 @@ public class ModelEvent extends ActionEvent{
         this.message = message;
     }
     public String getMessage(){return message;}
+    @Override
+    public int getID(){return id;}
 }

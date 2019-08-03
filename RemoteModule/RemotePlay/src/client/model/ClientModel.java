@@ -13,9 +13,10 @@ import java.io.*;
 public class ClientModel extends AbstractModel {
     // the calculator had methods such as add(), sub(), equals().
     // here I will have data and methods of the client menu instead.
-    int portNumber;
-    Boolean talking;
-    String address, line;
+    private Integer portNumber = 0;
+    Boolean talking = false;
+    String address;
+    String line = "";
     private DataOutputStream out = null;
     private BufferedReader in = null;
     private Socket sock = null;
@@ -41,30 +42,26 @@ public class ClientModel extends AbstractModel {
         ModelEvent me = new ModelEvent(this, 1, "", "Error!");
         notifyChanged(me);
     }
+    
     public Boolean validatePortAddr(String portNum, String address){
         Integer tempInt = null;
-        try{
-            tempInt = Integer.parseInt(portNum);
-        }
-        catch(NumberFormatException e){
-            return false;
-        }
-        catch(NullPointerException n){
-            return false;
-        }
-        if (tempInt > 65535 || tempInt < 2048){
-            return false;
-        }
+        try{tempInt = Integer.parseInt(portNum);}
+        catch(NumberFormatException e){  return false;}
+        catch(NullPointerException n){  return false;}
+        if (tempInt > 65535 || tempInt < 2048){  return false;}
+        this.portNumber = tempInt;
         // If time allows, will add text validation.        
+        this.address = address;
         return true;
     }
+    
     // This pulls values from the textfield and ensures that the port number
     // the server must listen on is valid (integer [2048, 65535]).
     public void validateTextFields(String portNum, String addr){
         System.out.println("Attempted portNum: " + portNum);
         System.out.println("Attempted ipAddr " + addr);
         if (!validatePortAddr(portNum, addr)){
-            me = new ModelEvent(this, 1, "", "Valid port number: [2048, 65535]");
+            me = new ModelEvent(this, 2, "", "Valid port number: [2048, 65535]");
             notifyChanged(me);    
         }
         else{
@@ -73,46 +70,34 @@ public class ClientModel extends AbstractModel {
     }
     
     public void activateListen(){
-        System.out.println("At Client::activateListen()");
-    // start listen-wait mode 
-        try{
-            sock = new Socket(address, portNumber);
-            System.out.println("\nClient connected to server.");
-            
-            ModelEvent me = new ModelEvent(this, 1, "", "Connected!");
-            notifyChanged(me);
-                
-            // initiate stream to receive client input
-            // maybe input will simply forward request packets as instances of a Request class
-            // for now simply a reflection until command "endgame" received
-            in = new BufferedReader(new InputStreamReader(System.in));
-
-            // send data to client
-            out = new DataOutputStream(sock.getOutputStream());
-
-            // close connection after client requests termination
-            System.out.println("Game ended.  Closing connection.\n");
-            sock.close();
-            in.close();
-        }
-        catch(UnknownHostException u){
-            System.out.println(u);
-        }  
-        catch(IOException i){
-            System.out.println(i);
-        }  
         
-        // Get data input.
-        line = "";
-        while (!line.equals("endgame")){
-            try{
-                line = in.readLine();
-                out.writeUTF(line);
+        // start talking thread
+        Runnable clientTalk = new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    System.out.println("Attempting to connect to server...");
+                    sock = new Socket(address, portNumber);
+                    System.out.println("Connected to server.");
+                    talking = true;
+                    me = new ModelEvent(this, 1, "", "Connected to server");
+                    notifyChanged(me);
+                }
+                catch(IOException i){
+                    System.out.println("Error connecting to server.");
+                    me = new ModelEvent(this, 3, "", "IP Address example: 127.0.0.1");
+                    notifyChanged(me);
+                    return;
+                    //i.printStackTrace();
+                }
             }
-            catch(IOException i){
-                System.out.println(i);
-            }
+        };
+        Thread clientThread = new Thread(clientTalk);
+        clientThread.start();
+        if (!talking){
+            return;
         }
+        
         try{
             in.close();
             in = null;
@@ -125,6 +110,7 @@ public class ClientModel extends AbstractModel {
             System.out.println(i);
         }
     }
+    
     public void closeProgram(){
         System.out.println("Closing program.\nGoodbye.");
         closeConnections();

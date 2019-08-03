@@ -48,20 +48,25 @@ public class ServerModel extends AbstractModel {
     public void validateTextField(String txt){
         System.out.println("Attempted portNum: " + txt);
         if (!validatePortNum(txt)){
-            me = new ModelEvent(this, 1, "", "Valid port number: [2048, 65535]");
+            me = new ModelEvent(this, 2, "", "Valid port number: [2048, 65535]");
             notifyChanged(me);    
         }
         else{System.out.println("Port number valid: " + portNumber);}
     }
     
     public void activateListen(){
-        //System.out.println("At Server::activateListen()");
-        listening = true;
-        // start listen-wait thread
-        
+        if (listening){
+            me = new ModelEvent(this, 1, "", "Already listening on port " + portNumber + ". No change.");
+            notifyChanged(me);
+            return;
+        }
+        // start listen-wait thread        
         Runnable serverListen = new Runnable(){
             @Override
             public void run(){
+                listening = true;
+                me = new ModelEvent(this, 1, "", "Listening on port " + portNumber + ".");
+                notifyChanged(me);
                 try{
                     ssock = new ServerSocket(portNumber);
                     while(listening){
@@ -112,9 +117,11 @@ public class ServerModel extends AbstractModel {
             System.out.println("Closing connection.");
             // Close client sockets... eventually.
             // Close server sockets.
-            if(csock!=null){
-                csock.close();
-                in.close();           
+            if(ssock!=null){
+                ssock.close();        
+            }
+            if(in != null){
+                in.close();
             }
         }
         catch(IOException i){

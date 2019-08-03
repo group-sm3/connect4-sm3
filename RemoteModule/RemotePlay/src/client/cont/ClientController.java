@@ -26,7 +26,10 @@ public class ClientController extends AbstractController{
     public void operation(String option, String portNumber, String address){
         if (option == (ClientView.CONNECT)){
             ((ClientModel)getModel()).validateTextFields(portNumber, address);
-            ((ClientModel)getModel()).activateListen();
+            int temp = ((ClientModel)getModel()).getPortNumber();
+            if (temp != 0){
+                ((ClientModel)getModel()).activateListen();
+            }      
         }
         else{
             ((ClientModel)getModel()).error();
@@ -36,4 +39,3 @@ public class ClientController extends AbstractController{
         ((ClientModel)getModel()).closeProgram();
     }  
 }
-
