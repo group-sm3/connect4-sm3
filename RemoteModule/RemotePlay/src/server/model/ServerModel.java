@@ -10,7 +10,7 @@ import java.io.*;
  * @author Anne
  */
 public class ServerModel extends AbstractModel {
-    private Integer portNumber = null;
+    private Integer portNumber = 0;
     private Boolean listening = false;
     private DataInputStream in = null;
     private ServerSocket servSock = null;
@@ -29,20 +29,14 @@ public class ServerModel extends AbstractModel {
         ModelEvent me = new ModelEvent(this, 1, "", "Error!");
         notifyChanged(me);
     }
+    
     public Boolean validatePortNum(String portNum){
         Integer tempInt = null;
-        try{
-            tempInt = Integer.parseInt(portNum);
-        }
-        catch(NumberFormatException e){
-            return false;
-        }
-        catch(NullPointerException n){
-            return false;
-        }
-        if (tempInt > 65535 || tempInt < 2048){
-            return false;
-        }
+        try{tempInt = Integer.parseInt(portNum);}
+        catch(NumberFormatException e){return false;}
+        catch(NullPointerException n){return false;}
+        if (tempInt > 65535 || tempInt < 2048){return false;}
+        this.portNumber = tempInt;
         return true;
     }
     // This pulls values from the textfield and ensures that the port number
@@ -53,9 +47,7 @@ public class ServerModel extends AbstractModel {
             me = new ModelEvent(this, 1, "", "Valid port number: [2048, 65535]");
             notifyChanged(me);    
         }
-        else{
-            System.out.println("Port number valid: " + txt);
-        }
+        else{System.out.println("Port number valid: " + portNumber);}
     }
     
     // This creates a socket based on validated port number and waits for 
@@ -63,9 +55,10 @@ public class ServerModel extends AbstractModel {
     public void activateListen(){
         System.out.println("At Server::activateListen()");
         // start listen-wait mode 
+        
         try{
             servSock = new ServerSocket(portNumber);
-            System.out.println("\nServer online.  Waiting for client...");
+            System.out.println("\nServer online at port" + portNumber + ".  Waiting for client...");
 
             // once client requests cnx, accept
             sock = servSock.accept();
@@ -81,7 +74,7 @@ public class ServerModel extends AbstractModel {
 
             // process data client sent
             String line = "";
-            while (!line.equals("endgame")){
+            while (!line.equals("ENDGAME")){
                     line = in.readUTF();
                     System.out.println(line);
             }
@@ -93,14 +86,14 @@ public class ServerModel extends AbstractModel {
     public void closeProgram(){
         System.out.println("Closing program.");
         closeConnections();
-        System.out.println("\nGoodbye.");
+        System.out.println("Goodbye.");
         System.exit(0);
     }
     // Closes all client connections, but does not end program.
     public void closeConnections(){
         try{
             // close connection after client requests termination
-            System.out.println("Closing connection.\n");
+            System.out.println("Closing connection.");
             if(sock!=null){
                 sock.close();
                 in.close();           

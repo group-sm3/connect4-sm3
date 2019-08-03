@@ -26,31 +26,27 @@ public class ClientView extends JFrameView{
         super(model, cont);
         textFieldPort.setText("port #");
         textFieldAddress.setText("ip address");
-        this.setPreferredSize(new Dimension(250, 100));
+        this.setPreferredSize(new Dimension(250, 120));
         this.getContentPane().add(textFieldPort, BorderLayout.NORTH);
         this.getContentPane().add(textFieldAddress, BorderLayout.CENTER);
        // Button
         JButton buttonConnect = new JButton(CONNECT);
         buttonConnect.addActionListener(handler);
         JPanel buttonPanel = new JPanel();
-        this.getContentPane().add(buttonPanel, BorderLayout.CENTER);
+        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(buttonConnect, null);
         pack(); 
     }
-    
-    // implement event-handling code
-    // i believe this is how the model alerts the view of a change.
+
     public void modelChanged(ModelEvent event){
         String message = event.getMessage();
         textFieldPort.setText(message);
-//        String msg = event.getAmount() + "";
-//        textFieldPort.setText(msg);
     }
 
     class Handler implements ActionListener{
         // event handled locally
         public void actionPerformed(ActionEvent e){
-            ((ClientController)getCont()).operation(e.getActionCommand());
+            ((ClientController)getCont()).operation(e.getActionCommand(), textFieldPort.getText(), textFieldAddress.getText());
         }
     }
     public static void main(String [] args) { new ClientController(); }

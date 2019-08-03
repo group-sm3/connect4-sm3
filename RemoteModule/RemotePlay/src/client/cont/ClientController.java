@@ -22,13 +22,9 @@ public class ClientController extends AbstractController{
     
     // These are command buttons (+, -, clear, equals).
     // Client equivalent (listen)
-    public void operation(String option){
+    public void operation(String option, String portNumber, String address){
         if (option == (ClientView.CONNECT)){
-            System.out.println("User attempts Connect");
-            //getIsValidPort(isValidPort);
-//            while(!isValidPort){
-//                ((ClientModel)getModel()).invalidInput();
-//            }
+            ((ClientModel)getModel()).validateTextFields(portNumber, address);
             ((ClientModel)getModel()).activateListen();
         }
         else{

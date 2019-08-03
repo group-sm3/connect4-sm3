@@ -22,7 +22,10 @@ public class ServerController extends AbstractController{
     public void operation(String option, String txt){
         if (option == (ServerView.LISTEN)){
             ((ServerModel)getModel()).validateTextField(txt);
-            //((ServerModel)getModel()).activateListen();
+            Integer tempInt = ((ServerModel)getModel()).getPortNumber();
+            if (tempInt != 0){
+                //((ServerModel)getModel()).activateListen();
+            }
         }
         else{
             ((ServerModel)getModel()).error();
