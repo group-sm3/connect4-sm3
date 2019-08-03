@@ -24,7 +24,7 @@ public class ServerController extends AbstractController{
             ((ServerModel)getModel()).validateTextField(txt);
             Integer tempInt = ((ServerModel)getModel()).getPortNumber();
             if (tempInt != 0){
-                //((ServerModel)getModel()).activateListen();
+                ((ServerModel)getModel()).activateListen();
             }
         }
         else{

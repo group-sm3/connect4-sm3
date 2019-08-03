@@ -4,6 +4,8 @@
 package server.model;
 import java.net.*;
 import java.io.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors; 
 
 /**
  *
@@ -13,9 +15,10 @@ public class ServerModel extends AbstractModel {
     private Integer portNumber = 0;
     private Boolean listening = false;
     private DataInputStream in = null;
-    private ServerSocket servSock = null;
-    private Socket sock = null;
+    private ServerSocket ssock = null;
+    private Socket csock = null;
     ModelEvent me = null;
+    final ExecutorService clientProcessingPool  = Executors.newFixedThreadPool(10);
     
     public void setPortNumber(Integer pn){
         this.portNumber = pn;
@@ -39,6 +42,7 @@ public class ServerModel extends AbstractModel {
         this.portNumber = tempInt;
         return true;
     }
+    
     // This pulls values from the textfield and ensures that the port number
     // the server must listen on is valid (integer [2048, 65535]).
     public void validateTextField(String txt){
@@ -50,52 +54,66 @@ public class ServerModel extends AbstractModel {
         else{System.out.println("Port number valid: " + portNumber);}
     }
     
-    // This creates a socket based on validated port number and waits for 
-    // a client to connect.  Later will modify to multithread multiple clients.
     public void activateListen(){
-        System.out.println("At Server::activateListen()");
-        // start listen-wait mode 
+        //System.out.println("At Server::activateListen()");
+        listening = true;
+        // start listen-wait thread
         
-        try{
-            servSock = new ServerSocket(portNumber);
-            System.out.println("\nServer online at port" + portNumber + ".  Waiting for client...");
-
-            // once client requests cnx, accept
-            sock = servSock.accept();
-            System.out.println("Client connection accepted.");
-            
-            me = new ModelEvent(this, 1, "", "Connected!");
-            notifyChanged(me);
-                
-            // initiate stream to receive client input
-            // maybe input will simply forward request packets as instances of a Request class
-            // for now simply a reflection until command "endgame" received
-            in = new DataInputStream(new BufferedInputStream(sock.getInputStream()));
-
-            // process data client sent
-            String line = "";
-            while (!line.equals("ENDGAME")){
-                    line = in.readUTF();
-                    System.out.println(line);
+        Runnable serverListen = new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    ssock = new ServerSocket(portNumber);
+                    while(listening){
+                        csock = ssock.accept();
+                        clientProcessingPool.submit(new ClientTask(csock));
+                    }
+                }
+                catch (IOException i){
+                    System.out.println(i);
+                }
+            }
+        };
+        Thread serverThread = new Thread(serverListen);
+        serverThread.start();
+        System.out.println("Server listening on port " + portNumber);
+    }
+    
+    private class ClientTask implements Runnable{
+        private final Socket csock;
+        private ClientTask(Socket cs){
+            this.csock = cs;
+        }
+        @Override
+        public void run(){
+            System.out.println("Client accepted.");
+            // Do client stuff.
+            try{
+                csock.close();
+            }
+            catch(IOException i){
+                System.out.println(i);
             }
         }
-        catch(IOException i){
-            System.out.println(i);
-        }  
-    }
+    };
+    
     public void closeProgram(){
         System.out.println("Closing program.");
+        listening = false;
         closeConnections();
         System.out.println("Goodbye.");
         System.exit(0);
     }
     // Closes all client connections, but does not end program.
+    
     public void closeConnections(){
         try{
             // close connection after client requests termination
             System.out.println("Closing connection.");
-            if(sock!=null){
-                sock.close();
+            // Close client sockets... eventually.
+            // Close server sockets.
+            if(csock!=null){
+                csock.close();
                 in.close();           
             }
         }
