@@ -6,6 +6,7 @@ import client.cont.*;
 import client.model.ClientModel;
 import client.view.ClientView;
 import client.view.JFrameView;
+import server.model.ServerModel;
 
 /**
  *
@@ -31,10 +32,8 @@ public class ClientController extends AbstractController{
             ((ClientModel)getModel()).error();
         }
     }
-    // validate user input
-//    void getIsValidPort(Boolean isValidPort){
-//        if ((ClientModel)getPortNumber() != 5050){
-//            
-//        }
-//    }
+    public void closeProgram(){
+        ((ClientModel)getModel()).closeProgram();
+    }  
 }
+

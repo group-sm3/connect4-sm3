@@ -115,13 +115,36 @@ public class ClientModel extends AbstractModel {
         }
         try{
             in.close();
+            in = null;
             out.close();
+            out = null;
             sock.close();
+            sock = null;
+        }
+        catch(IOException i){
+            System.out.println(i);
+        }
+    }
+    public void closeProgram(){
+        System.out.println("Closing program.\nGoodbye.");
+        closeConnections();
+        System.exit(0);
+    }
+    
+    public void closeConnections(){
+        try{
+            if (sock != null){
+                sock.close();
+            }
+            if (in != null){
+                in.close();
+            }
+            if (out != null){
+                out.close();
+            }
         }
         catch(IOException i){
             System.out.println(i);
         }
     }
 }
-
-

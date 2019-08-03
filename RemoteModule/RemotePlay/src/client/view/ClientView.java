@@ -11,6 +11,7 @@ import client.model.ModelEvent;
 import javax.swing.*; 
 import java.awt.*; 
 import java.awt.event.*;
+import server.cont.ServerController;
 
 /**
  *
@@ -29,6 +30,14 @@ public class ClientView extends JFrameView{
         this.setPreferredSize(new Dimension(250, 120));
         this.getContentPane().add(textFieldPort, BorderLayout.NORTH);
         this.getContentPane().add(textFieldAddress, BorderLayout.CENTER);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Cleanup networking resources before exiting.
+                ((ClientController)getCont()).closeProgram();
+            }
+        });
        // Button
         JButton buttonConnect = new JButton(CONNECT);
         buttonConnect.addActionListener(handler);
