@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package server.model;
 import java.net.*; 
 import java.io.*; 
 import java.lang.Thread;
 /**
- *
+ * PortListener classes enables the program to continue listening on a port
+ * for client connections in a distinct thread, without freezing the user menu.
  * @author Anne
  */
 public class PortListener extends Thread{
@@ -17,6 +13,12 @@ public class PortListener extends Thread{
     DataOutputStream out = null;
     String line = "";
     
+    /**
+     * Constructor which sets the fields required to establish socket.
+     * @param csock Socket object.
+     * @param in BufferedReader object.
+     * @param out DataOutputStream object.
+     */
     public void PortListener(Socket csock, BufferedReader in, DataOutputStream out){
         this.csock = csock;
         this.in = in;
@@ -24,6 +26,11 @@ public class PortListener extends Thread{
     }
     
     @Override
+    /**
+     * For the moment, the program will simply establish connection and echo
+     * lines.  It is up to the game designers as to how they want to incorporate
+     * this into the main game infrastructure.
+    */
     public void run(){
         while (!line.equals("ENDGAME")){
             try{
@@ -34,10 +41,5 @@ public class PortListener extends Thread{
                 System.out.println(i);
             }
         }
-        // if client endgames, gracefully close connection
-        // by alerting ServerController.
-        
     }
-    
-    
 }

@@ -14,15 +14,34 @@ public abstract class AbstractController implements Controller{
     private ServerView view;
     private ServerModel model;
 
+    /**
+     *
+     * @param sv
+     */
     public void setView(ServerView sv){
         this.view = sv;
     }
+
+    /**
+     *
+     * @return
+     */
     public ServerView getView(){
         return view;
     }
+
+    /**
+     *
+     * @param sm
+     */
     public void setModel(ServerModel sm){
         this.model = sm;
     }
+
+    /**
+     *
+     * @return
+     */
     public ServerModel getModel(){
         return model;
     }

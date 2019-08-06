@@ -1,6 +1,3 @@
-/*
-    
- */
 package server.model;
 import java.net.*;
 import java.io.*;
@@ -8,7 +5,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors; 
 
 /**
- *
+ * ServerModel is the implementation for the structure of the Server.  It 
+ * listens on a port specified by user, and manages clients.
+ * 
  * @author Anne
  */
 public class ServerModel extends AbstractModel {
@@ -20,19 +19,35 @@ public class ServerModel extends AbstractModel {
     ModelEvent me = null;
     final ExecutorService clientProcessingPool  = Executors.newFixedThreadPool(10);
     
+    /**
+     * Sets port number to listen on.
+     * @param pn Integer port number, enforced to be valid before setting.
+     */
     public void setPortNumber(Integer pn){
         this.portNumber = pn;
     }
     
+    /**
+     * Returns the current port number..
+     * @return Integer port number.
+     */
     public int getPortNumber(){
         return portNumber;
     }
     
+    /**
+     * Displays error message to user in event of issue.
+     */
     public void error(){
         ModelEvent me = new ModelEvent(this, 1, "", "Error!");
         notifyChanged(me);
     }
     
+    /**
+     * Validates the user's port number before setting it to the model.
+     * @param portNum String which is the user's attempt.
+     * @return Boolean true if requested port number valid, false otherwise.
+     */
     public Boolean validatePortNum(String portNum){
         Integer tempInt = null;
         try{tempInt = Integer.parseInt(portNum);}
@@ -42,9 +57,13 @@ public class ServerModel extends AbstractModel {
         this.portNumber = tempInt;
         return true;
     }
-    
-    // This pulls values from the textfield and ensures that the port number
-    // the server must listen on is valid (integer [2048, 65535]).
+
+    /**
+     * Pulls text string containing user's requested port number and validates.
+     * If a false is returned from validatePortNumber(), a message is displayed 
+     * to the user via ModelEvent me.
+     * @param txt
+     */
     public void validateTextField(String txt){
         System.out.println("Attempted portNum: " + txt);
         if (!validatePortNum(txt)){
@@ -54,6 +73,10 @@ public class ServerModel extends AbstractModel {
         else{System.out.println("Port number valid: " + portNumber);}
     }
     
+    /**
+     * Having validated the port number, this methods attempts to set the Server
+     * to listen on the requested port.
+     */
     public void activateListen(){
         if (listening){
             me = new ModelEvent(this, 1, "", "Already listening on port " + portNumber + ". No change.");
@@ -83,7 +106,10 @@ public class ServerModel extends AbstractModel {
         serverThread.start();
         System.out.println("Server listening on port " + portNumber);
     }
-    
+    /**
+     * Inner class which handles the interaction from the connected client and 
+     * server, freeing the server to continue listening on another thread.
+     */
     private class ClientTask implements Runnable{
         private final Socket csock;
         private ClientTask(Socket cs){
@@ -102,6 +128,10 @@ public class ServerModel extends AbstractModel {
         }
     };
     
+    /**
+     * Engages a healthy shutdown and freeing up of system resources.  Initiated
+     * by user clicking red X in the GUI menu.
+     */
     public void closeProgram(){
         System.out.println("Closing program.");
         listening = false;
@@ -109,14 +139,13 @@ public class ServerModel extends AbstractModel {
         System.out.println("Goodbye.");
         System.exit(0);
     }
-    // Closes all client connections, but does not end program.
     
+    /**
+     * Checks for and closes open sockets and streams.
+     */
     public void closeConnections(){
         try{
-            // close connection after client requests termination
             System.out.println("Closing connection.");
-            // Close client sockets... eventually.
-            // Close server sockets.
             if(ssock!=null){
                 ssock.close();        
             }
