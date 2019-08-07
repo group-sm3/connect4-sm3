@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import com.sm3.connect4.model.Game;
 
 /**
- * Unit test for app
+ * JUnit test for the Game class
  */
 public class GameTest {
     @Test
