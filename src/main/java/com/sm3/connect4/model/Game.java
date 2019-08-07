@@ -1,5 +1,9 @@
 package com.sm3.connect4.model;
 
+/**
+ * This class represents the logic of the Connect 4 game.
+ *
+ */
 public class Game extends Model {
 
 	private final int COLUMNS = 7;
@@ -10,57 +14,80 @@ public class Game extends Model {
 	private AI bot;
 	private int playerColor;
 	private boolean gameOver = false;
+	private boolean hasAI = true;
+	private boolean playerTurn = true;
 	private int[][] grid = new int[COLUMNS][ROWS];
-	private int counter[] = { 0,0,0,0,0,0,0 }; // counter counts how many free spaces are left (includes 0)
+	private int counter[] = { 0, 0, 0, 0, 0, 0, 0 }; // counter counts how many free spaces are left (includes 0)
 
-	// Constructor for Singleplayer Game
+	/**
+	 * Constructor used to start a game.
+	 * 
+	 * @param diff  The difficulty setting of the game. If no difficulty set, then no bot is created.
+	 * @param color The set color of the player.
+	 */
 	public Game(String diff, String color) {
-		if (diff == "Hard")
+		if (diff == "Easy")
 			difficulty = 1;
 		else if (diff == "Normal")
 			difficulty = 2;
 		else if (diff == "Hard")
 			difficulty = 3;
+		else
+			hasAI = false;
 
 		if (color == "Red") {
 			playerColor = red;
-			bot = new AI(yellow, ROWS, COLUMNS, grid, counter);
+			if (hasAI)
+				bot = new AI(yellow, ROWS, COLUMNS, grid, counter, difficulty);
 		} else {
 			playerColor = yellow;
-			bot = new AI(red, ROWS, COLUMNS, grid, counter);
+			if (hasAI)
+				bot = new AI(red, ROWS, COLUMNS, grid, counter, difficulty);
 		}
+
 	}
 
+	/**
+	 * Adds a disc to the grid if the column contains an open space.
+	 * 
+	 * @param disc   An integer that represents the color of the disc to be placed.
+	 * @param column An integer that represents the desired column to place a disc.
+	 * @return A ModelEvent class object that represents the information of the
+	 *         placed disc.
+	 */
 	private ModelEvent addDisc(int disc, int column) {
 
 		// Checks next available slot in column
-		int row = ROWS - 1;
-		do {
-			if (this.grid[column][row] != 0)
-				break;
-			row--;
-		} while (row >= 0);
-		row++;
-
-		// if row is full return ModelEvent without content
-		if (row > ROWS - 1)
-			return new ModelEvent(this, 1, "", "Invalid move.");
+		if (counter[column] > 5) {
+			System.out.print("full col");
+			return null;
+		}
 
 		// adds disc to column
-		this.grid[column][row] = disc;
-		this.counter[column]++;
+		this.grid[column][counter[column]] = disc;
 
 		// return ModelEvent that has content
 		char color;
+		String msg = "";
 		if (disc == 1) {
 			color = 'r';
+			msg += "Red ";
 		} else {
 			color = 'y';
+			msg += "Yellow ";
 		}
-		String msg = "move on row " + row + ", column " + column + ".";
-		return new ModelEvent(this, 1, "", column, row, color, msg, false);
+
+		msg += "move on row " + counter[column] + ", column " + column + ".";
+		counter[column]++;
+
+		return new ModelEvent(this, 1, "", column, counter[column] - 1, color, msg, false);
 	}
 
+	/**
+	 * Checks if there is 4 in a row.
+	 * 
+	 * @return A boolean that represents if there is a win in the game.
+	 */
 	private boolean CheckWinCondition() // signals: false = no win, true = win
 	{
 		// check horzontally & checks if more than 3 rows (for vertical and diagnal)
@@ -114,30 +141,45 @@ public class Game extends Model {
 		// if maxrows = 4 then 1 check, 5 2c, 6 3c, 7 4c
 		for (int r = 0; r < maxrows - 3; r++) {
 			for (int c = 0; c < COLUMNS - 3; c++) {
-				if (grid[c][r] != 0 && grid[c][r] == grid[c + 1][r + 1] && grid[c + 1][r + 1] == grid[c + 2][r + 2] && grid[c + 2][r + 2] == grid[c + 3][r + 3])
+				if (grid[c][r] != 0 && grid[c][r] == grid[c + 1][r + 1] && grid[c + 1][r + 1] == grid[c + 2][r + 2]
+						&& grid[c + 2][r + 2] == grid[c + 3][r + 3])
 					return true;
 			}
 		}
 
-		//check diagonal left
+		// check diagonal left
 		for (int r = 0; r < maxrows - 3; r++) {
-			for (int c = COLUMNS-1; c > COLUMNS - 5; c--) {
-				if (grid[c][r] != 0 && grid[c][r] == grid[c - 1][r + 1] && grid[c - 1][r + 1] == grid[c - 2][r + 2] && grid[c - 2][r + 2] == grid[c - 3][r + 3])
+			for (int c = COLUMNS - 1; c > COLUMNS - 5; c--) {
+				if (grid[c][r] != 0 && grid[c][r] == grid[c - 1][r + 1] && grid[c - 1][r + 1] == grid[c - 2][r + 2]
+						&& grid[c - 2][r + 2] == grid[c - 3][r + 3])
 					return true;
 			}
 		}
 		return false; // else, no win
 	}
 
+	/**
+	 * Allows for player to make their desired move using the addDisc method.
+	 * Notifies the view of changes.
+	 * 
+	 * @param column An integer that represents the player's desired column choice.
+	 */
 	public void playerColumnChoice(int column) {
 		if (gameOver)
 			return;
-
 		ModelEvent me;
 		if (playerColor == red)
 			me = addDisc(red, column);
 		else
 			me = addDisc(yellow, column);
+
+		if (!hasAI) {
+			if (playerColor == red)
+				playerColor = yellow;
+			else
+				playerColor = red;
+		} else
+			playerTurn = false;
 
 		if (me.getContent()) {
 			if (CheckWinCondition()) {
@@ -148,8 +190,12 @@ public class Game extends Model {
 		notifyChanged(me);
 	}
 
+	/**
+	 * Allows for the A.I. to make their desired move using the addDisc method.
+	 * Notifies the view of changes.
+	 */
 	public void botColumnChoice() {
-		if (gameOver)
+		if (gameOver || !hasAI)
 			return;
 
 		int botColumn = bot.BotTurn();
@@ -163,8 +209,25 @@ public class Game extends Model {
 			gameOver = true;
 			me.setWin(true);
 		}
-		
+		playerTurn = true;
 		notifyChanged(me);
 	}
 
+	/**
+	 * Gets the color of the player.
+	 * 
+	 * @return A integer that represents the player's color.
+	 */
+	public int getPlayerColor() {
+		return this.playerColor;
+	}
+
+	/**
+	 * Gets the difficulty of the A.I.
+	 * 
+	 * @return A integer that represents the A.I. difficulty.
+	 */
+	public int getDifficulty() {
+		return this.difficulty;
+	}
 }
