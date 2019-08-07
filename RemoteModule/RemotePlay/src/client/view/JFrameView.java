@@ -1,13 +1,4 @@
-/*
-    The JFrameView is the root of the View class hierarchy for top level 
-    Swing frames.  It allows a controller and a model to be registered 
-    and can also register itself as an obclient of that model.
-
-    Requires the implementation of modelChanged(ModelEvent Event) method 
-    to enable it to work with the notification mechanism in java.
- */
 package client.view;
-import client.view.*;
 import javax.swing.*;
 import client.cont.ClientController;
 import client.model.ClientModel;
@@ -15,49 +6,64 @@ import client.model.ModelListener;
 import client.model.AbstractModel;
 
 /**
- *
- * @author Anne
+ * JFrameView abstract class sets the behavior and fields for upper level Swing
+ * frames.  It registers a controller and a model, specifically creating a 
+ * relationship between listeners and actions.
+ * @author Anne Leach
  */
 public abstract class JFrameView extends JFrame implements View, ModelListener{
     private ClientModel model;
     private ClientController cont;
     
+    /**
+     * Constructor which sets the ClientModel object and ClientController 
+     * object.
+     * @param mod ClientModel object.
+     * @param con ClientController object.
+     */
     public JFrameView(ClientModel mod, ClientController con){
         setModel(mod);
         setCont(con);
     }
-    // what?
+
+    /**
+     * Sets ModelListeners to the model, so that the model is aware of some 
+     * change in the view.
+     */
     public void registerWithModel(){
         ((AbstractModel)model).addModelListener(this);
     }
+
+    /**
+     * 
+     * @return Returns ClientController object.
+     */
     public ClientController getCont(){
         return cont;
     }
     
+    /**
+     *
+     * @param cont Sets ClientController object.
+     */
     public void setCont(ClientController cont){
         this.cont = cont;
     }
     
+    /**
+     *
+     * @return ClientModel object.
+     */
     public ClientModel getModel(){
         return model;
     }
     
+    /**
+     *
+     * @param model Sets ClientModel object.
+     */
     public void setModel(ClientModel model){
         this.model = model;
         registerWithModel();
     }
-    
-
-//    public void setCont(ClientController sc){
-//        this.cont = sc;
-//    }
-//    public ClientController getCont(){
-//        return this.cont;
-//    }
-//    public void setModel(ClientModel sm){
-//        this.model = sm;
-//    }
-//    public ClientModel getModel(){
-//        return this.model;
-//    }
 }

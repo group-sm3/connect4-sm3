@@ -1,29 +1,45 @@
-/*
-    Root of Cont class hierarchy.  Defines basic facilities required to 
-    implement a controller, i.e. a view and model to be linked to a controller.
- */
 package client.cont;
 import client.cont.*;
 import client.model.ClientModel;
 import client.view.ClientView;
 
 /**
- *
- * @author Anne
+ * Abstract class reflects its super interface in that it sets methods to 
+ * set and get ClientView and ClientModel objects.
+ * @author Anne Leach
  */
 public abstract class AbstractController implements Controller{
     private ClientView view;
     private ClientModel model;
 
+    /**
+     *
+     * @param sv ClientView object
+     */
     public void setView(ClientView sv){
         this.view = sv;
     }
+
+    /**
+     *
+     * @return ClientView object
+     */
     public ClientView getView(){
         return view;
     }
+
+    /**
+     *
+     * @param sm ClientModel object
+     */
     public void setModel(ClientModel sm){
         this.model = sm;
     }
+
+    /**
+     *
+     * @return ClientModel object
+     */
     public ClientModel getModel(){
         return model;
     }

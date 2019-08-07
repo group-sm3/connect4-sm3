@@ -1,13 +1,10 @@
-/*
-    Root of Cont class hierarchy.  Defines basic facilities required to 
-    implement a controller, i.e. a view and model to be linked to a controller.
- */
 package server.cont;
 import server.model.ServerModel;
 import server.view.ServerView;
 
 /**
- *
+ * Abstract class specifies behavior (methods) of subclasses.  Simply setting 
+ * and getting Server/Controller views/models.
  * @author Anne
  */
 public abstract class AbstractController implements Controller{
@@ -16,7 +13,7 @@ public abstract class AbstractController implements Controller{
 
     /**
      *
-     * @param sv
+     * @param sv Sets ServerView object.
      */
     public void setView(ServerView sv){
         this.view = sv;
@@ -24,7 +21,7 @@ public abstract class AbstractController implements Controller{
 
     /**
      *
-     * @return
+     * @return Returns ServerView object.
      */
     public ServerView getView(){
         return view;
@@ -32,7 +29,7 @@ public abstract class AbstractController implements Controller{
 
     /**
      *
-     * @param sm
+     * @param sm Sets ServerMOdel object.
      */
     public void setModel(ServerModel sm){
         this.model = sm;
@@ -40,7 +37,7 @@ public abstract class AbstractController implements Controller{
 
     /**
      *
-     * @return
+     * @return Returns ServerModel object.
      */
     public ServerModel getModel(){
         return model;

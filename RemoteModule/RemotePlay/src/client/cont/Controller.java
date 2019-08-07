@@ -1,19 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.cont;
-import client.cont.*;
 import client.model.ClientModel;
 import client.view.ClientView;
 /**
- *
- * @author Anne
+ * Interface requires that subclasses implement methods for setting and getting
+ * ClientView and ClientModel objects.
+ * @author Anne Leach
  */
 public interface Controller {
+
+    /**
+     * 
+     * @param sv Sets ClientView object
+     */
     void setView(ClientView sv);
+
+    /**
+     *
+     * @return Returns ClientView object
+     */
     ClientView getView();
+
+    /**
+     *
+     * @param sm Sets ClientModel object
+     */
     void setModel(ClientModel sm);
+
+    /**
+     *
+     * @return Returns ClientModel object
+     */
     ClientModel getModel();    
 }

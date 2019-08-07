@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package server.cont;
 import server.model.ServerModel;
 import server.view.ServerView;
 /**
- *
+ * Interface controller requires setting and getting methods for its View and
+ * Controller objects.
  * @author Anne
  */
 public interface Controller {
