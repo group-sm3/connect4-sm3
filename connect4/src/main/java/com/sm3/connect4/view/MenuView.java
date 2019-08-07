@@ -24,7 +24,7 @@ public class MenuView{
     private static final int HEIGHT = 400;
     public static final String SPGAME = "Singleplayer";
 	public static final String MPGAME = "Multiplayer";
-	public static final String LEADERBOARD = "Leaderboard";
+	
 	public static final String EXIT = "Exit";
     
     private final Model model;
@@ -68,8 +68,8 @@ public class MenuView{
         {
         	if (e.getSource() == b1){
                     ViewHandler.selectAction(b1.getText());
-//                    stage.close();
-//                    e.consume();
+                    stage.close();
+                    e.consume();
                 }
         		
         });
@@ -80,21 +80,12 @@ public class MenuView{
         {
         	if (e.getSource() == b2){
                     ViewHandler.selectAction(b2.getText());
-//                    stage.close();
-//                    e.consume();
+                    stage.close();
+                    e.consume();
                 }
         });
 		
 		//Settings button
-		Button b3 = new Button(LEADERBOARD);
-		b3.setOnAction(e -> 
-        {
-        	if (e.getSource() == b3){
-                    ViewHandler.selectAction(b3.getText());
-//                    stage.close();
-//                    e.consume();
-                }
-        });
 		
 		//Exit button
 		Button b4 = new Button(EXIT);
@@ -115,7 +106,7 @@ public class MenuView{
 
 		//Create vertical column layout with buttons
         VBox vbox = new VBox(15);
-        vbox.getChildren().addAll(b1, b2, b3, b4);
+        vbox.getChildren().addAll(b1, b2, b4);
         vbox.setAlignment(Pos.CENTER);
         
 

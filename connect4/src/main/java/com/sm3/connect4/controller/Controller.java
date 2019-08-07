@@ -20,16 +20,12 @@ public class Controller {
 
 		if ( selection.equals("Singleplayer") ) {
 			window = new GameView();
-                        window.displayWindow("SP");
+				window.displayWindow("SP");
 		}
 		else if ( selection.equals("Multiplayer") ) {
 			window = new GameView();
 			window.displayWindow("MP");
 		}
-                else if ( selection.equals("Leadernboard")){
-                        window = new GameView();
-                        window.displayWindow("LB");
-                }
 		
 	}
 

@@ -34,6 +34,7 @@ public class Game extends Model {
 	private ModelEvent addDisc(int disc, int column) {
 
 		// Checks next available slot in column
+                String str;
 		int row = ROWS - 1;
 		do {
 			if (this.grid[column][row] != 0)
@@ -54,10 +55,12 @@ public class Game extends Model {
 		char color;
 		if (disc == 1) {
 			color = 'r';
+                        str = "Red";
 		} else {
 			color = 'y';
+                        str = "Yellow";
 		}
-		String msg = "move on row " + row + ", column " + column + ".";
+		String msg = "Move " + str + ": (Row " + (row+1) + ", Column " + (column+1) + ")\n";
 		return new ModelEvent(this, 1, "", column, row, color, msg, false);
 	}
 
