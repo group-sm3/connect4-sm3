@@ -1,5 +1,7 @@
 package com.sm3.connect4.model;
 
+import java.util.Random;
+
 /**
  * A class that contains the algorithm for the Computer player in the game.
  */
@@ -10,24 +12,29 @@ public class AI {
 	private int[] counter;
 	private int botColor;
 	private int playerColor;
+	private int difficulty;
 
 	/**
 	 * Creates an AI with the game's rows, columns, grid, bot color, and counter
 	 * information.
 	 * 
-	 * @param color   An integer that represents the color of the computer player.
-	 * @param rows    An integer that represents the number of rows in the board.
-	 * @param columns An integer that represents the number of columns in the board.
-	 * @param grid    A double array of integers that represents the game board.
-	 * @param counter An array of integers that represents the number of available
-	 *                spaces in each column.
+	 * @param color      An integer that represents the color of the computer
+	 *                   player.
+	 * @param rows       An integer that represents the number of rows in the board.
+	 * @param columns    An integer that represents the number of columns in the
+	 *                   board.
+	 * @param grid       A double array of integers that represents the game board.
+	 * @param counter    An array of integers that represents the number of
+	 *                   available spaces in each column.
+	 * @param difficulty An integer that represents the A.I.'s difficulty.
 	 */
-	public AI(int color, int rows, int columns, int grid[][], int counter[]) {
+	public AI(int color, int rows, int columns, int grid[][], int counter[], int difficulty) {
 		this.ROWS = rows;
 		this.COLUMNS = columns;
 		this.botColor = color;
 		this.grid = grid;
 		this.counter = counter;
+		this.difficulty = difficulty;
 		if (botColor == 1) {
 			playerColor = 2;
 		} else {
@@ -63,7 +70,7 @@ public class AI {
 		for (int i = 0; i < 7; i++) {
 			int y = counter[i];
 			try {
-				if (grid[i + 1][y] == grid[i + -2][y] && grid[i + 2][y] == grid[i + 3][y]) {
+				if (grid[i + 1][y] == grid[i + 2][y] && grid[i + 2][y] == grid[i + 3][y]) {
 					// Debug.Log("a case 1");
 					if (grid[i + 1][y] == playerColor) {
 						if (score[i] < 5) {
@@ -504,12 +511,60 @@ public class AI {
 				max = i;
 			}
 		}
+		// normal bot: if no win con, potentially select random column
+		Random random = new Random();
+		if (score[max] < 6 && difficulty == 2) {
+			int randCol = 9;
+			int x = random.nextInt(2);
+			// System.out.print("X: " + x + "\n");
+			if (x == 1) // 1/2 chance of randomizing
+			{
+				int count = 0;
+				while (randCol == 9) {
+					count++;
+					randCol = random.nextInt(7);
+					// System.out.print("Random int: " + randCol + "\n");
+					if (score[randCol] < 2) // won't change to a 0 condition
+					{
+						randCol = 9;
+					}
+				}
+				max = randCol;
+				// System.out.print("Randomizing col to : "+max+"\n");
+			}
 
+		}
+		// easy bot: if no win con, select random column. If win con, potentially select
+		// random column
+		if (score[max] < 6 && difficulty == 1) {
+			int randCol = 9;
+			while (randCol == 9) {
+				randCol = random.nextInt(7);
+				if (score[randCol] == 0) {
+					randCol = 9;
+				}
+			}
+			// System.out.print("Random int is " + randCol + "\n");
+			max = randCol;
+		} else if (difficulty == 1) // potential random column selection
+		{
+			int x = random.nextInt(3);
+			if (x == 1) // 1 in 3 chance
+			{
+				int randCol = 9;
+				while (randCol == 9) {
+					randCol = random.nextInt(7);
+					if (score[randCol] == 0) {
+						randCol = 9;
+					}
+				}
+				max = randCol;
+				// System.out.print("Randomizing to " + randCol + "\n");
+			}
+		}
 		bestCol = max;
-		System.out.println("Scores: " + score[0] + " " + score[1] + " " + score[2] + " " + score[3] + " " + score[4]
-				+ " " + score[5] + " " + score[6] + "\n");
-
+		// System.out.println("Scores: " + score[0] + " "+ score[1] + " "+ score[2] + "
+		// "+ score[3] + " "+ score[4] + " "+ score[5] + " "+ score[6] + "\n");
 		return bestCol;
 	}
-
 }

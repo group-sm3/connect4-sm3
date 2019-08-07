@@ -56,7 +56,7 @@ public class GameView implements Window, ModelListener {
 	private Pane spmenu() {
 
 		// Setup for difficulty choice row
-		ChoiceBox<String> difficultycb = new ChoiceBox<String>(FXCollections.observableArrayList("Easy", "Hard"));
+		ChoiceBox<String> difficultycb = new ChoiceBox<String>(FXCollections.observableArrayList("Easy", "Normal", "Hard"));
 		difficultycb.setValue("Easy");
 		HBox hbox1 = new HBox();
 		hbox1.setPadding(new Insets(10, 25, 0, 25));
@@ -81,7 +81,7 @@ public class GameView implements Window, ModelListener {
 		startbutton.setOnAction(e -> {
 			if (e.getSource() == startbutton) {
 				this.playerColor = playercolorcb.getSelectionModel().getSelectedItem().toString() == "Red" ? 'r' : 'y';
-				ViewHandler.spStart(difficultycb.getSelectionModel().getSelectedItem(),
+				ViewHandler.gameStart(difficultycb.getSelectionModel().getSelectedItem(),
 						playercolorcb.getSelectionModel().getSelectedItem(), this);
 				stage.setScene(new Scene(gameView()));
 			}
@@ -126,7 +126,7 @@ public class GameView implements Window, ModelListener {
 		playercolorcb.setValue("Red");
 
 		hbox1.setPadding(new Insets(10, 10, 0, 10));
-		hbox1.getChildren().add(new Text("     Player Color: "));
+		hbox1.getChildren().add(new Text("     Player 1 Color: "));
 		hbox1.getChildren().add((playercolorcb));
 
 		// Start game button
@@ -139,7 +139,7 @@ public class GameView implements Window, ModelListener {
 		startbutton.setOnAction(e -> {
 			if (e.getSource() == startbutton) {
 				this.playerColor = playercolorcb.getSelectionModel().getSelectedItem().toString() == "Red" ? 'r' : 'y';
-				ViewHandler.spStart(connectioncb.getSelectionModel().getSelectedItem(),
+				ViewHandler.gameStart(connectioncb.getSelectionModel().getSelectedItem(),
 						playercolorcb.getSelectionModel().getSelectedItem(), this);
 				stage.setScene(new Scene(gameView()));
 			}
@@ -212,6 +212,24 @@ public class GameView implements Window, ModelListener {
 			}
 			return;
 		}
+	else if (type == mpstart) {
+		if (event.getContent()) {
+			board.placeDisc(event.getColor(), event.getColumn(), event.getRow());
+			gameinfo.appendText("\n" + event.getMessage());
+			if (event.getWin()) {
+				String msg = event.getColor() == 'r' ? "Red wins!!!" : "Yellow wins!!!";
+				gameinfo.appendText("\n" + msg);
+			}
+			gameinfo.setScrollTop(Double.MAX_VALUE);
+
+			board.setPlayerMove(true);
+		} else {
+			gameinfo.appendText("\n" + event.getMessage());
+			board.setPlayerMove(true);
+			gameinfo.setScrollTop(Double.MAX_VALUE);
+		}
+		return;
+	}
 
 	}
 }

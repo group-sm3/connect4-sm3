@@ -20,14 +20,14 @@ public class ViewHandler {
 
 	/**
 	 * Notifies the controller of the user's selected difficulty and player color
-	 * when starting a new singleplayer game.
+	 * when starting a new game.
 	 * 
 	 * @param difficulty A string to represent the A.I.'s difficulty.
 	 * @param color      A string to represent the player's color preference.
 	 * @param ml         A ModelListener class object to reperesnet the view's
 	 *                   listener of the model events.
 	 */
-	public static void spStart(String difficulty, String color, ModelListener ml) {
+	public static void gameStart(String difficulty, String color, ModelListener ml) {
 		Gui.getController().spStart(difficulty, color, ml);
 	}
 

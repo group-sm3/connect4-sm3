@@ -44,7 +44,7 @@ public class Controller {
 	}
 
 	/**
-	 * Used by the secondary menu of the singleplayer start to initiate a game with
+	 * Used by the secondary menu of the singleplayer/local multiplayer start to initiate a game with
 	 * the player's set preferences.
 	 * 
 	 * @param difficulty The string used to represent the difficulty of the game.

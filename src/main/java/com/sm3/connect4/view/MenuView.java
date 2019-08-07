@@ -73,8 +73,6 @@ public class MenuView {
 		b1.setOnAction(e -> {
 			if (e.getSource() == b1) {
 				ViewHandler.selectAction(b1.getText());
-				// stage.close();
-				// e.consume();
 			}
 
 		});
@@ -84,8 +82,6 @@ public class MenuView {
 		b2.setOnAction(e -> {
 			if (e.getSource() == b2) {
 				ViewHandler.selectAction(b2.getText());
-				// stage.close();
-				// e.consume();
 			}
 		});
 
