@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Server">
+  <ClassDiagramComponents>
+    <Class name="AbstractController" package="cont" visibility="public" isAbstract="true" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="view" type="ServerView" visibility="private"/>
+        <Field name="model" type="ServerModel" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setView" returnType="void" visibility="public">
+          <Argument type="ServerView" name="sv"/>
+        </Method>
+        <Method name="getView" returnType="ServerView" visibility="public"/>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="ServerModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ServerModel" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="Controller" package="cont" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Methods>
+        <Method name="setView" returnType="void" visibility="package">
+          <Argument type="ServerView" name="sv"/>
+        </Method>
+        <Method name="getView" returnType="ServerView" visibility="package"/>
+        <Method name="setModel" returnType="void" visibility="package">
+          <Argument type="ServerModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ServerModel" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Class name="ServerController" package="cont" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="isValidPort" type="Boolean" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="operation" returnType="void" visibility="public">
+          <Argument type="String" name="option"/>
+          <Argument type="String" name="txt"/>
+        </Method>
+        <Method name="closeProgram" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AbstractModel" package="model" visibility="public" isAbstract="true" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="listeners" type="List&lt;ModelListener&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="notifyChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+        <Method name="addModelListener" returnType="void" visibility="public">
+          <Argument type="ModelListener" name="l"/>
+        </Method>
+        <Method name="removeModelListener" returnType="void" visibility="public">
+          <Argument type="ModelListener" name="l"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="Model" package="model" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Methods>
+        <Method name="notifyChanged" returnType="void" visibility="package">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="ModelEvent" package="model" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="message" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Object" name="obj"/>
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="msg"/>
+          <Argument type="String" name="message"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMessage" returnType="String" visibility="public"/>
+        <Method name="getID" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="ModelListener" package="model" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Methods>
+        <Method name="modelChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="PortListener" package="model" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="csock" type="Socket" visibility="package"/>
+        <Field name="in" type="BufferedReader" visibility="package"/>
+        <Field name="out" type="DataOutputStream" visibility="package"/>
+        <Field name="line" type="String" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="PortListener" returnType="void" visibility="public">
+          <Argument type="Socket" name="csock"/>
+          <Argument type="BufferedReader" name="in"/>
+          <Argument type="DataOutputStream" name="out"/>
+        </Method>
+        <Method name="run" returnType="/**
+     * For the moment, the program will simply establish connection and echo
+     * lines.  It is up to the game designers as to how they want to incorporate
+     * this into the main game infrastructure.
+    */
+void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ServerModel" package="model" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="portNumber" type="Integer" visibility="private"/>
+        <Field name="listening" type="Boolean" visibility="private"/>
+        <Field name="in" type="DataInputStream" visibility="private"/>
+        <Field name="ssock" type="ServerSocket" visibility="private"/>
+        <Field name="csock" type="Socket" visibility="private"/>
+        <Field name="me" type="ModelEvent" visibility="package"/>
+        <Field name="clientProcessingPool" type="ExecutorService" visibility="package" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setPortNumber" returnType="void" visibility="public">
+          <Argument type="Integer" name="pn"/>
+        </Method>
+        <Method name="getPortNumber" returnType="int" visibility="public"/>
+        <Method name="error" returnType="void" visibility="public"/>
+        <Method name="validatePortNum" returnType="Boolean" visibility="public">
+          <Argument type="String" name="portNum"/>
+        </Method>
+        <Method name="validateTextField" returnType="void" visibility="public">
+          <Argument type="String" name="txt"/>
+        </Method>
+        <Method name="activateListen" returnType="void" visibility="public"/>
+        <Method name="closeProgram" returnType="void" visibility="public"/>
+        <Method name="closeConnections" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="JFrameView" package="view" visibility="public" isAbstract="true" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="model" type="ServerModel" visibility="private"/>
+        <Field name="cont" type="ServerController" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ServerModel" name="mod"/>
+          <Argument type="ServerController" name="con"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="registerWithModel" returnType="void" visibility="public"/>
+        <Method name="getCont" returnType="ServerController" visibility="public"/>
+        <Method name="setCont" returnType="void" visibility="public">
+          <Argument type="ServerController" name="cont"/>
+        </Method>
+        <Method name="getModel" returnType="ServerModel" visibility="public"/>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="ServerModel" name="model"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ServerView" package="view" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="LISTEN" type="String" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="textField" type="JTextField" visibility="private"/>
+        <Field name="userMessage" type="JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ServerModel" name="model"/>
+          <Argument type="ServerController" name="cont"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="modelChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="View" package="view" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Methods>
+        <Method name="setCont" returnType="void" visibility="package">
+          <Argument type="ServerController" name="sc"/>
+        </Method>
+        <Method name="getCont" returnType="ServerController" visibility="package"/>
+        <Method name="setModel" returnType="void" visibility="package">
+          <Argument type="ServerModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ServerModel" visibility="package"/>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="view.JFrameView" target="model.ModelListener"/>
+    <UseRelation source="view.JFrameView" target="model.ServerModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Model" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.AbstractController" target="model.ServerModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.AbstractModel" target="model.ModelListener" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="view" source="cont.AbstractController" target="view.ServerView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.View" target="cont.ServerController" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="cont.AbstractController" target="cont.Controller"/>
+    <HasRelation name="model" source="cont.AbstractController" target="model.ServerModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="view.ServerView" target="view.JFrameView"/>
+    <UseRelation source="cont.Controller" target="model.ServerModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listeners" source="model.AbstractModel" target="model.ModelListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ModelListener&gt;"/>
+    <IsRelation name="is" source="model.ServerModel" target="model.AbstractModel"/>
+    <UseRelation source="view.ServerView" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="cont.ServerController" target="cont.AbstractController"/>
+    <UseRelation source="view.JFrameView" target="cont.ServerController" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cont" source="view.JFrameView" target="cont.ServerController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="view.JFrameView" target="view.View"/>
+    <HasRelation name="me" source="model.ServerModel" target="model.ModelEvent" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.Controller" target="view.View" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.AbstractModel" target="model.Model"/>
+    <UseRelation source="model.AbstractModel" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.ModelListener" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="model" source="view.JFrameView" target="model.ServerModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.AbstractController" target="view.View" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.View" target="model.ServerModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
