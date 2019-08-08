@@ -12,9 +12,9 @@ For Summer II we are designing a classic connect 4 program, and posting design d
 
 ## How to run
 Change Directory in Windows Command Promt: 
-
+```shell
 >connect4-sm3\connect4\target
-
+```
 JAR file can be executed through command prompt using the following command:
 ```shell
 $ java -jar connect4-0.1.jar
