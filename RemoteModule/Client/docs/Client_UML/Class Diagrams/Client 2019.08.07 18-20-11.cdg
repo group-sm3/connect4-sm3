@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Client">
+  <ClassDiagramComponents>
+    <Class name="AbstractController" package="cont" visibility="public" isAbstract="true" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="view" type="ClientView" visibility="private"/>
+        <Field name="model" type="ClientModel" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setView" returnType="void" visibility="public">
+          <Argument type="ClientView" name="sv"/>
+        </Method>
+        <Method name="getView" returnType="ClientView" visibility="public"/>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="ClientModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ClientModel" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ClientController" package="cont" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="isValidPort" type="Boolean" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="operation" returnType="void" visibility="public">
+          <Argument type="String" name="option"/>
+          <Argument type="String" name="portNumber"/>
+          <Argument type="String" name="address"/>
+        </Method>
+        <Method name="closeProgram" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="Controller" package="cont" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Methods>
+        <Method name="setView" returnType="void" visibility="package">
+          <Argument type="ClientView" name="sv"/>
+        </Method>
+        <Method name="getView" returnType="ClientView" visibility="package"/>
+        <Method name="setModel" returnType="void" visibility="package">
+          <Argument type="ClientModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ClientModel" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Class name="AbstractModel" package="model" visibility="public" isAbstract="true" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="listeners" type="List&lt;ModelListener&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="notifyChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+        <Method name="addModelListener" returnType="void" visibility="public">
+          <Argument type="ModelListener" name="l"/>
+        </Method>
+        <Method name="removeModelListener" returnType="void" visibility="public">
+          <Argument type="ModelListener" name="l"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ClientModel" package="model" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="portNumber" type="Integer" visibility="private"/>
+        <Field name="talking" type="Boolean" visibility="package"/>
+        <Field name="address" type="String" visibility="package"/>
+        <Field name="line" type="String" visibility="package"/>
+        <Field name="out" type="DataOutputStream" visibility="private"/>
+        <Field name="in" type="BufferedReader" visibility="private"/>
+        <Field name="sock" type="Socket" visibility="private"/>
+        <Field name="me" type="ModelEvent" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="setPortNumber" returnType="void" visibility="public">
+          <Argument type="Integer" name="pn"/>
+        </Method>
+        <Method name="setAddress" returnType="void" visibility="public">
+          <Argument type="String" name="addr"/>
+        </Method>
+        <Method name="getPortNumber" returnType="int" visibility="public"/>
+        <Method name="getAddress" returnType="String" visibility="public"/>
+        <Method name="error" returnType="void" visibility="public"/>
+        <Method name="validatePortAddr" returnType="Boolean" visibility="public">
+          <Argument type="String" name="portNum"/>
+          <Argument type="String" name="address"/>
+        </Method>
+        <Method name="validateTextFields" returnType="void" visibility="public">
+          <Argument type="String" name="portNum"/>
+          <Argument type="String" name="addr"/>
+        </Method>
+        <Method name="activateListen" returnType="void" visibility="public"/>
+        <Method name="closeProgram" returnType="void" visibility="public"/>
+        <Method name="closeConnections" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="Model" package="model" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Methods>
+        <Method name="notifyChanged" returnType="void" visibility="package">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="ModelEvent" package="model" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="message" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Object" name="obj"/>
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="msg"/>
+          <Argument type="String" name="message"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getMessage" returnType="String" visibility="public"/>
+        <Method name="getID" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="ModelListener" package="model" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Methods>
+        <Method name="modelChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="ClientView" package="view" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="CONNECT" type="String" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="textFieldPort" type="JTextField" visibility="private"/>
+        <Field name="textFieldAddress" type="JTextField" visibility="private"/>
+        <Field name="userMessage" type="JLabel" visibility="private"/>
+        <Field name="handler" type="Handler" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ClientModel" name="model"/>
+          <Argument type="ClientController" name="cont"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="modelChanged" returnType="void" visibility="public">
+          <Argument type="ModelEvent" name="event"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="JFrameView" package="view" visibility="public" isAbstract="true" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="model" type="ClientModel" visibility="private"/>
+        <Field name="cont" type="ClientController" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ClientModel" name="mod"/>
+          <Argument type="ClientController" name="con"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="registerWithModel" returnType="void" visibility="public"/>
+        <Method name="getCont" returnType="ClientController" visibility="public"/>
+        <Method name="setCont" returnType="void" visibility="public">
+          <Argument type="ClientController" name="cont"/>
+        </Method>
+        <Method name="getModel" returnType="ClientModel" visibility="public"/>
+        <Method name="setModel" returnType="void" visibility="public">
+          <Argument type="ClientModel" name="model"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="View" package="view" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Methods>
+        <Method name="setCont" returnType="void" visibility="package">
+          <Argument type="ClientController" name="sc"/>
+        </Method>
+        <Method name="getCont" returnType="ClientController" visibility="package"/>
+        <Method name="setModel" returnType="void" visibility="package">
+          <Argument type="ClientModel" name="sm"/>
+        </Method>
+        <Method name="getModel" returnType="ClientModel" visibility="package"/>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="model.AbstractModel" target="model.Model"/>
+    <UseRelation source="model.ModelListener" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.JFrameView" target="cont.Controller" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="model.ClientModel" target="model.AbstractModel"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="view.JFrameView" target="view.View"/>
+    <HasRelation name="listeners" source="model.AbstractModel" target="model.ModelListener" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;ModelListener&gt;"/>
+    <HasRelation name="me" source="model.ClientModel" target="model.ModelEvent" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="model" source="cont.AbstractController" target="model.ClientModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cont" source="view.JFrameView" target="cont.ClientController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.Controller" target="model.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.AbstractController" target="view.View" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.JFrameView" target="model.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="view.ClientView" target="view.JFrameView"/>
+    <HasRelation name="model" source="view.JFrameView" target="model.ClientModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="view.JFrameView" target="model.ModelListener"/>
+    <UseRelation source="cont.AbstractController" target="model.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.AbstractModel" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.View" target="cont.Controller" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="view.View" target="model.Model" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="cont.ClientController" target="cont.AbstractController"/>
+    <HasRelation name="view" source="cont.AbstractController" target="view.ClientView" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="cont.Controller" target="view.View" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.AbstractModel" target="model.ModelListener" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="model.Model" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="cont.AbstractController" target="cont.Controller"/>
+    <UseRelation source="view.ClientView" target="model.ModelEvent" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
